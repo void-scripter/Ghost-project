@@ -109,15 +109,6 @@ SpBtn.ZIndex = 10
 SpBtn.Font = Enum.Font.GothamBold
 SpBtn.TextSize = 12
 
-local MiniBtn = Instance.new("TextButton", Header)
-MiniBtn.Position = UDim2.new(0.85, 0, 0.2, 0)
-MiniBtn.Size = UDim2.new(0, 30, 0, 30)
-MiniBtn.Text = "−"
-MiniBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
-MiniBtn.TextColor3 = Color3.new(1, 1, 1)
-Round(MiniBtn, 8)
-MiniBtn.ZIndex = 10
-
 local Content = Instance.new("Frame", MainFrame)
 Content.Size = UDim2.new(1, 0, 1, -45)
 Content.Position = UDim2.new(0, 0, 0, 45)
@@ -160,17 +151,39 @@ Holder.AutomaticCanvasSize = Enum.AutomaticSize.Y
 local UIListLayout = Instance.new("UIListLayout", Holder)
 UIListLayout.Padding = UDim.new(0, 8)
 
+local function refreshButtonsColors()
+    for _, container in pairs(Holder:GetChildren()) do
+        if container:IsA("Frame") then
+            local pName = container.Name
+            local vw = container:FindFirstChild("VW_Btn")
+            local lp = container:FindFirstChild("LP_Btn")
+            if vw then
+                local target = Players:FindFirstChild(pName)
+                if target and Camera.CameraSubject == (target.Character and target.Character:FindFirstChild("Humanoid")) then
+                    vw.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
+                else
+                    vw.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+                end
+            end
+            if lp then
+                if currentLoopTarget == pName then
+                    lp.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
+                else
+                    lp.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+                end
+            end
+        end
+    end
+end
+
 local function applyGodMode()
     if not godModeActive then return end
     local char = Player.Character or Player.CharacterAdded:Wait()
     local hum = char:WaitForChild("Humanoid")
     hum.MaxHealth = math.huge
     hum.Health = math.huge
-    
     hum:GetPropertyChangedSignal("Health"):Connect(function()
-        if godModeActive and hum.Health < hum.MaxHealth then
-            hum.Health = hum.MaxHealth
-        end
+        if godModeActive and hum.Health < hum.MaxHealth then hum.Health = hum.MaxHealth end
     end)
 end
 
@@ -178,12 +191,7 @@ GodBtn.MouseButton1Click:Connect(function()
     godModeActive = not godModeActive
     GodBtn.Text = godModeActive and "GOD ON" or "GOD OFF"
     GodBtn.BackgroundColor3 = godModeActive and Color3.fromRGB(0, 170, 0) or Color3.fromRGB(50, 50, 60)
-    if godModeActive then applyGodMode() else
-        if Player.Character and Player.Character:FindFirstChild("Humanoid") then
-            Player.Character.Humanoid.MaxHealth = 100
-            Player.Character.Humanoid.Health = 100
-        end
-    end
+    if godModeActive then applyGodMode() end
 end)
 
 local function updateFilter()
@@ -193,23 +201,12 @@ local function updateFilter()
             local pName = item.Name:lower()
             local pDisplay = item:FindFirstChild("DN") and item.DN.Text:lower() or ""
             if q == "" then item.Visible = true else
-                local matchName = pName:sub(1, #q) == q
-                local matchDisplay = pDisplay:sub(1, #q) == q
-                item.Visible = (matchName or matchDisplay)
+                item.Visible = pName:find(q) or pDisplay:find(q)
             end
         end
     end
 end
 SearchBox:GetPropertyChangedSignal("Text"):Connect(updateFilter)
-
-local function ResetButtons(btnType)
-    for _, frame in pairs(Holder:GetChildren()) do
-        if frame:IsA("Frame") then
-            local target = frame:FindFirstChild(btnType)
-            if target then target.BackgroundColor3 = Color3.fromRGB(45, 45, 55) end
-        end
-    end
-end
 
 local function createPlayerButton(plr)
     if plr == Player then return end
@@ -241,70 +238,81 @@ local function createPlayerButton(plr)
     userLbl.TextXAlignment = Enum.TextXAlignment.Left
     
     local tp = Instance.new("TextButton", container)
-    tp.Name = "TP_Btn"
-    tp.Size = UDim2.new(0, 45, 0, 30)
-    tp.Position = UDim2.new(0.5, 0, 0.25, 0)
-    tp.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
-    tp.Text = "TP"
-    tp.TextColor3 = Color3.new(1,1,1)
+    tp.Name = "TP_Btn"; tp.Size = UDim2.new(0, 45, 0, 30); tp.Position = UDim2.new(0.5, 0, 0.25, 0)
+    tp.BackgroundColor3 = Color3.fromRGB(50, 100, 200); tp.Text = "TP"; tp.TextColor3 = Color3.new(1,1,1)
     Round(tp, 6)
     
     local vw = Instance.new("TextButton", container)
-    vw.Name = "VW_Btn"
-    vw.Size = UDim2.new(0, 45, 0, 30)
-    vw.Position = UDim2.new(0.66, 0, 0.25, 0)
-    vw.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-    vw.Text = "VW"
-    vw.TextColor3 = Color3.new(1,1,1)
+    vw.Name = "VW_Btn"; vw.Size = UDim2.new(0, 45, 0, 30); vw.Position = UDim2.new(0.66, 0, 0.25, 0)
+    vw.Text = "VW"; vw.TextColor3 = Color3.new(1,1,1)
     Round(vw, 6)
     
     local lp = Instance.new("TextButton", container)
-    lp.Name = "LP_Btn"
-    lp.Size = UDim2.new(0, 45, 0, 30)
-    lp.Position = UDim2.new(0.82, 0, 0.25, 0)
-    lp.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-    lp.Text = "LP"
-    lp.TextColor3 = Color3.new(1,1,1)
+    lp.Name = "LP_Btn"; lp.Size = UDim2.new(0, 45, 0, 30); lp.Position = UDim2.new(0.82, 0, 0.25, 0)
+    lp.Text = "LP"; lp.TextColor3 = Color3.new(1,1,1)
     Round(lp, 6)
 
     vw.MouseButton1Click:Connect(function()
         if Camera.CameraSubject == (plr.Character and plr.Character:FindFirstChild("Humanoid")) then 
             Camera.CameraSubject = Player.Character:FindFirstChild("Humanoid")
-            vw.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
         else 
-            ResetButtons("VW_Btn")
-            if plr.Character and plr.Character:FindFirstChild("Humanoid") then 
-                Camera.CameraSubject = plr.Character.Humanoid
-                vw.BackgroundColor3 = Color3.fromRGB(50, 100, 200) 
-            end 
+            if plr.Character and plr.Character:FindFirstChild("Humanoid") then Camera.CameraSubject = plr.Character.Humanoid end 
         end
+        refreshButtonsColors()
     end)
     
     lp.MouseButton1Click:Connect(function()
-        if currentLoopTarget == plr.Name then 
-            currentLoopTarget = ""
-            lp.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
-        else 
-            ResetButtons("LP_Btn")
-            currentLoopTarget = plr.Name
-            lp.BackgroundColor3 = Color3.fromRGB(50, 100, 200) 
-        end
+        if currentLoopTarget == plr.Name then currentLoopTarget = "" else currentLoopTarget = plr.Name end
+        refreshButtonsColors()
     end)
     
     tp.MouseButton1Click:Connect(function() 
         if plr.Character then Player.Character:PivotTo(plr.Character:GetPivot()) end 
     end)
+    refreshButtonsColors()
 end
 
 local function refreshList()
+    local oldQuery = SearchBox.Text
     for _, child in pairs(Holder:GetChildren()) do if child:IsA("Frame") then child:Destroy() end end
     for _, p in pairs(Players:GetPlayers()) do createPlayerButton(p) end
-    updateFilter()
+    SearchBox.Text = oldQuery; updateFilter()
 end
-
 Players.PlayerAdded:Connect(function() task.wait(1); refreshList() end)
 Players.PlayerRemoving:Connect(function() task.wait(1); refreshList() end)
 refreshList()
+
+local MiniBtn = Instance.new("TextButton", Header)
+MiniBtn.Position = UDim2.new(0.85, 0, 0.2, 0)
+MiniBtn.Size = UDim2.new(0, 30, 0, 30)
+MiniBtn.Text = "−"
+MiniBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
+MiniBtn.TextColor3 = Color3.new(1, 1, 1)
+Round(MiniBtn, 8)
+MiniBtn.ZIndex = 10
+
+MiniBtn.MouseButton1Click:Connect(function()
+    clickCount = clickCount + 1; task.delay(0.5, function() clickCount = 0 end)
+    if clickCount == 3 then
+        isMainMinimised = true
+        MainFrame:TweenSize(UDim2.new(0, 310, 0, 110), "Out", "Quad", 0.3, true)
+        Content.Visible = true; SearchBox.Visible = false; AnimBtn.Visible = false; GodBtn.Visible = false
+        TitleLabel.Text = "GHOST SLIM🎯"; SubLabel.Visible = false
+        Holder.Position = UDim2.new(0.03, 0, 0, 5); Holder.Size = UDim2.new(0.94, 0, 0.9, 0)
+        MiniBtn.Text = "≡"
+        task.wait(0.35); refreshButtonsColors()
+    elseif clickCount == 1 then
+        isMainMinimised = not isMainMinimised
+        MainFrame:TweenSize(isMainMinimised and UDim2.new(0, 310, 0, 45) or UDim2.new(0, 310, 0, 380), "Out", "Quad", 0.3, true)
+        Content.Visible = not isMainMinimised; SearchBox.Visible = true; AnimBtn.Visible = true; GodBtn.Visible = true
+        TitleLabel.Text = "GHOST TP🎯"; SubLabel.Visible = not isMainMinimised
+        Holder.Position = UDim2.new(0.03, 0, 0, 55); Holder.Size = UDim2.new(0.94, 0, 0.8, 0)
+        MiniBtn.Text = isMainMinimised and "+" or "−"
+        task.wait(0.35); refreshButtonsColors()
+    end
+end)
+
+SpBtn.MouseButton1Click:Connect(function() spinGuiOpen = not spinGuiOpen; SpinFrame.Visible = spinGuiOpen end)
 
 local spinning = false
 SpinToggle.MouseButton1Click:Connect(function()
@@ -313,36 +321,12 @@ SpinToggle.MouseButton1Click:Connect(function()
     spinning = not spinning
     if spinning then
         local av = Instance.new("BodyAngularVelocity", hrp)
-        av.Name = "AbilGhostSpin"
-        av.MaxTorque = Vector3.new(0, math.huge, 0)
+        av.Name = "AbilGhostSpin"; av.MaxTorque = Vector3.new(0, math.huge, 0)
         av.AngularVelocity = Vector3.new(0, tonumber(SpeedBox.Text) or 700, 0)
-        av.P = 1500
-        SpinToggle.Text = "SPIN: ON"
-        SpinToggle.BackgroundColor3 = Color3.fromRGB(0, 170, 120)
+        SpinToggle.Text = "SPIN: ON"; SpinToggle.BackgroundColor3 = Color3.fromRGB(0, 170, 120)
     else
         if hrp:FindFirstChild("AbilGhostSpin") then hrp.AbilGhostSpin:Destroy() end
-        SpinToggle.Text = "SPIN: OFF"
-        SpinToggle.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
-    end
-end)
-
-SpBtn.MouseButton1Click:Connect(function()
-    spinGuiOpen = not spinGuiOpen
-    SpinFrame.Visible = spinGuiOpen
-    SpBtn.BackgroundColor3 = spinGuiOpen and Color3.fromRGB(50, 100, 200) or Color3.fromRGB(100, 60, 180)
-end)
-
-task.spawn(function()
-    while true do
-        if currentLoopTarget ~= "" then
-            local targetPlr = Players:FindFirstChild(currentLoopTarget)
-            if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
-                Player.Character:PivotTo(targetPlr.Character.HumanoidRootPart.CFrame)
-            else 
-                currentLoopTarget = "" 
-            end
-        end
-        task.wait(0.1)
+        SpinToggle.Text = "SPIN: OFF"; SpinToggle.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
     end
 end)
 
@@ -350,9 +334,7 @@ AnimBtn.MouseButton1Click:Connect(function()
     animActive = not animActive
     AnimBtn.Text = animActive and "KAYANG ON" or "ANIM OFF"
     AnimBtn.BackgroundColor3 = animActive and Color3.fromRGB(0, 170, 120) or Color3.fromRGB(50, 50, 60)
-    if not animActive and Player.Character and Player.Character:FindFirstChild("Humanoid") then 
-        Player.Character.Humanoid.Health = 0 
-    end
+    if not animActive and Player.Character and Player.Character:FindFirstChild("Humanoid") then Player.Character.Humanoid.Health = 0 end
     if animActive and Player.Character then 
         local anim = Player.Character:WaitForChild("Animate", 10)
         if anim then 
@@ -362,44 +344,25 @@ AnimBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+task.spawn(function()
+    while true do
+        if currentLoopTarget ~= "" then
+            local targetPlr = Players:FindFirstChild(currentLoopTarget)
+            if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
+                Player.Character:PivotTo(targetPlr.Character.HumanoidRootPart.CFrame)
+            end
+        end
+        task.wait(0.1)
+    end
+end)
+
 Player.CharacterAdded:Connect(function(char)
     task.wait(0.5)
     if godModeActive then applyGodMode() end
     if animActive then 
         local anim = char:WaitForChild("Animate", 10)
         if anim then 
-            anim.walk.WalkAnim.AnimationId = "rbxassetid://88508412373927"
-            anim.run.RunAnim.AnimationId = "rbxassetid://88508412373927" 
+            anim.walk.WalkAnim.AnimationId = "rbxassetid://88508412373927"; anim.run.RunAnim.AnimationId = "rbxassetid://88508412373927" 
         end
-    end
-end)
-
-MiniBtn.MouseButton1Click:Connect(function()
-    clickCount = clickCount + 1
-    task.delay(0.5, function() clickCount = 0 end)
-    if clickCount == 3 then
-        isMainMinimised = true
-        MainFrame:TweenSize(UDim2.new(0, 310, 0, 110), "Out", "Quad", 0.3, true)
-        Content.Visible = true
-        SearchBox.Visible = false
-        AnimBtn.Visible = false
-        GodBtn.Visible = false
-        TitleLabel.Text = "GHOST SLIM🎯"
-        SubLabel.Visible = false
-        Holder.Position = UDim2.new(0.03, 0, 0, 5)
-        Holder.Size = UDim2.new(0.94, 0, 0.9, 0)
-        MiniBtn.Text = "≡"
-    elseif clickCount == 1 then
-        isMainMinimised = not isMainMinimised
-        MainFrame:TweenSize(isMainMinimised and UDim2.new(0, 310, 0, 45) or UDim2.new(0, 310, 0, 380), "Out", "Quad", 0.3, true)
-        Content.Visible = not isMainMinimised
-        SearchBox.Visible = true
-        AnimBtn.Visible = true
-        GodBtn.Visible = true
-        TitleLabel.Text = "GHOST TP🎯"
-        SubLabel.Visible = not isMainMinimised
-        Holder.Position = UDim2.new(0.03, 0, 0, 55)
-        Holder.Size = UDim2.new(0.94, 0, 0.8, 0)
-        MiniBtn.Text = isMainMinimised and "+" or "−"
     end
 end)
