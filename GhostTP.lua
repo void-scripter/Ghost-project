@@ -1,15 +1,38 @@
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
+local RunService = game:GetService("RunService")
 local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
 ScreenGui.Name = "AbilGhostSuite"
 
 local currentLoopTarget = "" 
+local currentBPTarget = ""
 local animActive = false
 local godModeActive = false 
 local isMainMinimised = false 
 local spinGuiOpen = false
 local clickCount = 0 
+local NetworkParts = {}
+
+local MagnetPart = Instance.new("Part")
+MagnetPart.Name = "AbilMagnetPoint"
+MagnetPart.Anchored = true
+MagnetPart.CanCollide = false
+MagnetPart.Transparency = 1
+MagnetPart.Parent = workspace
+local Attachment1 = Instance.new("Attachment", MagnetPart)
+
+task.spawn(function()
+    while task.wait() do
+        local sethp = sethiddenproperty or set_hidden_prop
+        if sethp then sethp(Player, "SimulationRadius", math.huge) end
+        if currentBPTarget ~= "" then
+            for _, p in pairs(NetworkParts) do
+                if p and p.Parent then p.Velocity = Vector3.new(14.47, 14.47, 14.47) end
+            end
+        end
+    end
+end)
 
 local function Round(obj, radius)
     local corner = Instance.new("UICorner")
@@ -151,12 +174,33 @@ Holder.AutomaticCanvasSize = Enum.AutomaticSize.Y
 local UIListLayout = Instance.new("UIListLayout", Holder)
 UIListLayout.Padding = UDim.new(0, 8)
 
+local function ApplyPhysics(v)
+    if v:IsA("BasePart") and not v.Anchored and not v.Parent:FindFirstChildOfClass("Humanoid") then
+        if v.Name ~= "Handle" and not v.Parent:IsA("Tool") then
+            table.insert(NetworkParts, v)
+            v.CanCollide = false
+            for _, child in pairs(v:GetChildren()) do
+                if child:IsA("BodyMover") or child:IsA("AlignPosition") or child:IsA("Torque") then child:Destroy() end
+            end
+            local att2 = Instance.new("Attachment", v)
+            local ap = Instance.new("AlignPosition", v)
+            ap.Attachment0 = att2
+            ap.Attachment1 = Attachment1
+            ap.MaxForce = math.huge; ap.MaxVelocity = math.huge; ap.Responsiveness = 200
+            local trq = Instance.new("Torque", v)
+            trq.Attachment0 = att2
+            trq.Torque = Vector3.new(25000, 25000, 25000)
+        end
+    end
+end
+
 local function refreshButtonsColors()
     for _, container in pairs(Holder:GetChildren()) do
         if container:IsA("Frame") then
             local pName = container.Name
             local vw = container:FindFirstChild("VW_Btn")
             local lp = container:FindFirstChild("LP_Btn")
+            local bp = container:FindFirstChild("BP_Btn")
             if vw then
                 local target = Players:FindFirstChild(pName)
                 if target and Camera.CameraSubject == (target.Character and target.Character:FindFirstChild("Humanoid")) then
@@ -170,6 +214,13 @@ local function refreshButtonsColors()
                     lp.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
                 else
                     lp.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+                end
+            end
+            if bp then
+                if currentBPTarget == pName then
+                    bp.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
+                else
+                    bp.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
                 end
             end
         end
@@ -238,19 +289,24 @@ local function createPlayerButton(plr)
     userLbl.TextXAlignment = Enum.TextXAlignment.Left
     
     local tp = Instance.new("TextButton", container)
-    tp.Name = "TP_Btn"; tp.Size = UDim2.new(0, 45, 0, 30); tp.Position = UDim2.new(0.5, 0, 0.25, 0)
+    tp.Name = "TP_Btn"; tp.Size = UDim2.new(0, 36, 0, 30); tp.Position = UDim2.new(0.44, 0, 0.25, 0)
     tp.BackgroundColor3 = Color3.fromRGB(50, 100, 200); tp.Text = "TP"; tp.TextColor3 = Color3.new(1,1,1)
     Round(tp, 6)
     
     local vw = Instance.new("TextButton", container)
-    vw.Name = "VW_Btn"; vw.Size = UDim2.new(0, 45, 0, 30); vw.Position = UDim2.new(0.66, 0, 0.25, 0)
+    vw.Name = "VW_Btn"; vw.Size = UDim2.new(0, 36, 0, 30); vw.Position = UDim2.new(0.58, 0, 0.25, 0)
     vw.Text = "VW"; vw.TextColor3 = Color3.new(1,1,1)
     Round(vw, 6)
-    
+
     local lp = Instance.new("TextButton", container)
-    lp.Name = "LP_Btn"; lp.Size = UDim2.new(0, 45, 0, 30); lp.Position = UDim2.new(0.82, 0, 0.25, 0)
+    lp.Name = "LP_Btn"; lp.Size = UDim2.new(0, 36, 0, 30); lp.Position = UDim2.new(0.72, 0, 0.25, 0)
     lp.Text = "LP"; lp.TextColor3 = Color3.new(1,1,1)
     Round(lp, 6)
+
+    local bp = Instance.new("TextButton", container)
+    bp.Name = "BP_Btn"; bp.Size = UDim2.new(0, 36, 0, 30); bp.Position = UDim2.new(0.86, 0, 0.25, 0)
+    bp.Text = "BP"; bp.TextColor3 = Color3.new(1,1,1)
+    Round(bp, 6)
 
     vw.MouseButton1Click:Connect(function()
         if Camera.CameraSubject == (plr.Character and plr.Character:FindFirstChild("Humanoid")) then 
@@ -263,6 +319,17 @@ local function createPlayerButton(plr)
     
     lp.MouseButton1Click:Connect(function()
         if currentLoopTarget == plr.Name then currentLoopTarget = "" else currentLoopTarget = plr.Name end
+        refreshButtonsColors()
+    end)
+
+    bp.MouseButton1Click:Connect(function()
+        if currentBPTarget == plr.Name then
+            currentBPTarget = ""; NetworkParts = {}
+            for _, v in pairs(workspace:GetDescendants()) do if v:IsA("AlignPosition") or v:IsA("Torque") then v:Destroy() end end
+        else
+            currentBPTarget = plr.Name
+            for _, v in pairs(workspace:GetDescendants()) do ApplyPhysics(v) end
+        end
         refreshButtonsColors()
     end)
     
@@ -344,15 +411,18 @@ AnimBtn.MouseButton1Click:Connect(function()
     end
 end)
 
-task.spawn(function()
-    while true do
-        if currentLoopTarget ~= "" then
-            local targetPlr = Players:FindFirstChild(currentLoopTarget)
-            if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
-                Player.Character:PivotTo(targetPlr.Character.HumanoidRootPart.CFrame)
-            end
+RunService.Heartbeat:Connect(function()
+    if currentLoopTarget ~= "" then
+        local targetPlr = Players:FindFirstChild(currentLoopTarget)
+        if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
+            Player.Character:PivotTo(targetPlr.Character.HumanoidRootPart.CFrame)
         end
-        task.wait(0.1)
+    end
+    if currentBPTarget ~= "" then
+        local targetPlr = Players:FindFirstChild(currentBPTarget)
+        if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
+            MagnetPart.CFrame = targetPlr.Character.HumanoidRootPart.CFrame
+        end
     end
 end)
 
@@ -362,7 +432,8 @@ Player.CharacterAdded:Connect(function(char)
     if animActive then 
         local anim = char:WaitForChild("Animate", 10)
         if anim then 
-            anim.walk.WalkAnim.AnimationId = "rbxassetid://88508412373927"; anim.run.RunAnim.AnimationId = "rbxassetid://88508412373927" 
+            anim.walk.WalkAnim.AnimationId = "rbxassetid://88508412373927";
+            anim.run.RunAnim.AnimationId = "rbxassetid://88508412373927" 
         end
     end
 end)
