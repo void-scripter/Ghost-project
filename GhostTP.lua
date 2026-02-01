@@ -13,6 +13,7 @@ local isMainMinimised = false
 local spinGuiOpen = false
 local clickCount = 0 
 local NetworkParts = {}
+local orbitAngle = 0 -- Variabel rotasi gasing
 
 local MagnetPart = Instance.new("Part")
 MagnetPart.Name = "AbilMagnetPoint"
@@ -38,6 +39,29 @@ local function Round(obj, radius)
     local corner = Instance.new("UICorner")
     corner.CornerRadius = UDim.new(0, radius)
     corner.Parent = obj
+end
+
+-- CARA KERJA BRING PARTS BARU (GASING BLACKHOLE)
+local function ApplyPhysics(v)
+    if v:IsA("BasePart") and not v.Anchored and not v.Parent:FindFirstChildOfClass("Humanoid") then
+        if v.Name ~= "Handle" and not v.Parent:IsA("Tool") then
+            table.insert(NetworkParts, v)
+            v.CanCollide = false
+            for _, child in pairs(v:GetChildren()) do
+                if child:IsA("BodyMover") or child:IsA("AlignPosition") or child:IsA("Torque") then child:Destroy() end
+            end
+            local att2 = Instance.new("Attachment", v)
+            local ap = Instance.new("AlignPosition", v)
+            ap.Attachment0 = att2
+            ap.Attachment1 = Attachment1
+            ap.MaxForce = math.huge
+            ap.MaxVelocity = math.huge
+            ap.Responsiveness = 200 
+            local trq = Instance.new("Torque", v)
+            trq.Attachment0 = att2
+            trq.Torque = Vector3.new(1000000, 1000000, 1000000) -- Putaran gasing
+        end
+    end
 end
 
 local MainFrame = Instance.new("Frame", ScreenGui)
@@ -76,61 +100,6 @@ SubLabel.Font = Enum.Font.Gotham
 SubLabel.TextSize = 9
 SubLabel.TextXAlignment = Enum.TextXAlignment.Left
 SubLabel.ZIndex = 10
-
-local SpinFrame = Instance.new("Frame", ScreenGui)
-SpinFrame.Size = UDim2.new(0, 160, 0, 120)
-SpinFrame.Position = UDim2.new(0.1, 320, 0.2, 0)
-SpinFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
-SpinFrame.Visible = false
-SpinFrame.Active = true
-SpinFrame.Draggable = true
-Round(SpinFrame, 10)
-
-local SpinBorder = Instance.new("Frame", SpinFrame)
-SpinBorder.Size = UDim2.new(1, 2, 1, 2)
-SpinBorder.Position = UDim2.new(0, -1, 0, -1)
-SpinBorder.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
-SpinBorder.ZIndex = 0
-Round(SpinBorder, 10)
-
-local SpinTitle = Instance.new("TextLabel", SpinFrame)
-SpinTitle.Size = UDim2.new(1, 0, 0, 25)
-SpinTitle.Text = "SPIN SETTINGS 🎯"
-SpinTitle.TextColor3 = Color3.new(1,1,1)
-SpinTitle.BackgroundTransparency = 1
-SpinTitle.Font = Enum.Font.GothamBold
-SpinTitle.TextSize = 11
-
-local SpeedBox = Instance.new("TextBox", SpinFrame)
-SpeedBox.Size = UDim2.new(0.85, 0, 0, 30)
-SpeedBox.Position = UDim2.new(0.075, 0, 0.25, 0)
-SpeedBox.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
-SpeedBox.TextColor3 = Color3.new(1,1,1)
-SpeedBox.Text = "700"
-Round(SpeedBox, 6)
-SpeedBox.Font = Enum.Font.Gotham
-SpeedBox.TextSize = 12
-
-local SpinToggle = Instance.new("TextButton", SpinFrame)
-SpinToggle.Size = UDim2.new(0.85, 0, 0, 35)
-SpinToggle.Position = UDim2.new(0.075, 0, 0.58, 0)
-SpinToggle.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
-SpinToggle.Text = "SPIN: OFF"
-SpinToggle.TextColor3 = Color3.new(1,1,1)
-Round(SpinToggle, 6)
-SpinToggle.Font = Enum.Font.GothamBold
-SpinToggle.TextSize = 12
-
-local SpBtn = Instance.new("TextButton", Header)
-SpBtn.Position = UDim2.new(0.73, 0, 0.2, 0)
-SpBtn.Size = UDim2.new(0, 30, 0, 30)
-SpBtn.Text = "SP"
-SpBtn.BackgroundColor3 = Color3.fromRGB(100, 60, 180)
-SpBtn.TextColor3 = Color3.new(1, 1, 1)
-Round(SpBtn, 8)
-SpBtn.ZIndex = 10
-SpBtn.Font = Enum.Font.GothamBold
-SpBtn.TextSize = 12
 
 local Content = Instance.new("Frame", MainFrame)
 Content.Size = UDim2.new(1, 0, 1, -45)
@@ -173,26 +142,6 @@ Holder.ScrollBarThickness = 2
 Holder.AutomaticCanvasSize = Enum.AutomaticSize.Y
 local UIListLayout = Instance.new("UIListLayout", Holder)
 UIListLayout.Padding = UDim.new(0, 8)
-
-local function ApplyPhysics(v)
-    if v:IsA("BasePart") and not v.Anchored and not v.Parent:FindFirstChildOfClass("Humanoid") then
-        if v.Name ~= "Handle" and not v.Parent:IsA("Tool") then
-            table.insert(NetworkParts, v)
-            v.CanCollide = false
-            for _, child in pairs(v:GetChildren()) do
-                if child:IsA("BodyMover") or child:IsA("AlignPosition") or child:IsA("Torque") then child:Destroy() end
-            end
-            local att2 = Instance.new("Attachment", v)
-            local ap = Instance.new("AlignPosition", v)
-            ap.Attachment0 = att2
-            ap.Attachment1 = Attachment1
-            ap.MaxForce = math.huge; ap.MaxVelocity = math.huge; ap.Responsiveness = 200
-            local trq = Instance.new("Torque", v)
-            trq.Attachment0 = att2
-            trq.Torque = Vector3.new(25000, 25000, 25000)
-        end
-    end
-end
 
 local function refreshButtonsColors()
     for _, container in pairs(Holder:GetChildren()) do
@@ -266,7 +215,6 @@ local function createPlayerButton(plr)
     container.Size = UDim2.new(1, -5, 0, 60)
     container.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
     Round(container, 10)
-    
     local nameLbl = Instance.new("TextLabel", container)
     nameLbl.Name = "DN"
     nameLbl.Size = UDim2.new(0.4, 0, 0.4, 0)
@@ -277,7 +225,6 @@ local function createPlayerButton(plr)
     nameLbl.Font = Enum.Font.GothamBold
     nameLbl.TextSize = 10
     nameLbl.TextXAlignment = Enum.TextXAlignment.Left
-    
     local userLbl = Instance.new("TextLabel", container)
     userLbl.Size = UDim2.new(0.4, 0, 0.3, 0)
     userLbl.Position = UDim2.new(0.05, 0, 0.55, 0)
@@ -287,27 +234,22 @@ local function createPlayerButton(plr)
     userLbl.Font = Enum.Font.Gotham
     userLbl.TextSize = 8
     userLbl.TextXAlignment = Enum.TextXAlignment.Left
-    
     local tp = Instance.new("TextButton", container)
     tp.Name = "TP_Btn"; tp.Size = UDim2.new(0, 36, 0, 30); tp.Position = UDim2.new(0.44, 0, 0.25, 0)
     tp.BackgroundColor3 = Color3.fromRGB(50, 100, 200); tp.Text = "TP"; tp.TextColor3 = Color3.new(1,1,1)
     Round(tp, 6)
-    
     local vw = Instance.new("TextButton", container)
     vw.Name = "VW_Btn"; vw.Size = UDim2.new(0, 36, 0, 30); vw.Position = UDim2.new(0.58, 0, 0.25, 0)
     vw.Text = "VW"; vw.TextColor3 = Color3.new(1,1,1)
     Round(vw, 6)
-
     local lp = Instance.new("TextButton", container)
     lp.Name = "LP_Btn"; lp.Size = UDim2.new(0, 36, 0, 30); lp.Position = UDim2.new(0.72, 0, 0.25, 0)
     lp.Text = "LP"; lp.TextColor3 = Color3.new(1,1,1)
     Round(lp, 6)
-
     local bp = Instance.new("TextButton", container)
     bp.Name = "BP_Btn"; bp.Size = UDim2.new(0, 36, 0, 30); bp.Position = UDim2.new(0.86, 0, 0.25, 0)
     bp.Text = "BP"; bp.TextColor3 = Color3.new(1,1,1)
     Round(bp, 6)
-
     vw.MouseButton1Click:Connect(function()
         if Camera.CameraSubject == (plr.Character and plr.Character:FindFirstChild("Humanoid")) then 
             Camera.CameraSubject = Player.Character:FindFirstChild("Humanoid")
@@ -316,12 +258,10 @@ local function createPlayerButton(plr)
         end
         refreshButtonsColors()
     end)
-    
     lp.MouseButton1Click:Connect(function()
         if currentLoopTarget == plr.Name then currentLoopTarget = "" else currentLoopTarget = plr.Name end
         refreshButtonsColors()
     end)
-
     bp.MouseButton1Click:Connect(function()
         if currentBPTarget == plr.Name then
             currentBPTarget = ""; NetworkParts = {}
@@ -332,7 +272,6 @@ local function createPlayerButton(plr)
         end
         refreshButtonsColors()
     end)
-    
     tp.MouseButton1Click:Connect(function() 
         if plr.Character then Player.Character:PivotTo(plr.Character:GetPivot()) end 
     end)
@@ -379,6 +318,61 @@ MiniBtn.MouseButton1Click:Connect(function()
     end
 end)
 
+local SpBtn = Instance.new("TextButton", Header)
+SpBtn.Position = UDim2.new(0.73, 0, 0.2, 0)
+SpBtn.Size = UDim2.new(0, 30, 0, 30)
+SpBtn.Text = "SP"
+SpBtn.BackgroundColor3 = Color3.fromRGB(100, 60, 180)
+SpBtn.TextColor3 = Color3.new(1, 1, 1)
+Round(SpBtn, 8)
+SpBtn.ZIndex = 10
+SpBtn.Font = Enum.Font.GothamBold
+SpBtn.TextSize = 12
+
+local SpinFrame = Instance.new("Frame", ScreenGui)
+SpinFrame.Size = UDim2.new(0, 160, 0, 120)
+SpinFrame.Position = UDim2.new(0.1, 320, 0.2, 0)
+SpinFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+SpinFrame.Visible = false
+SpinFrame.Active = true
+SpinFrame.Draggable = true
+Round(SpinFrame, 10)
+
+local SpinBorder = Instance.new("Frame", SpinFrame)
+SpinBorder.Size = UDim2.new(1, 2, 1, 2)
+SpinBorder.Position = UDim2.new(0, -1, 0, -1)
+SpinBorder.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
+SpinBorder.ZIndex = 0
+Round(SpinBorder, 10)
+
+local SpinTitle = Instance.new("TextLabel", SpinFrame)
+SpinTitle.Size = UDim2.new(1, 0, 0, 25)
+SpinTitle.Text = "SPIN SETTINGS 🎯"
+SpinTitle.TextColor3 = Color3.new(1,1,1)
+SpinTitle.BackgroundTransparency = 1
+SpinTitle.Font = Enum.Font.GothamBold
+SpinTitle.TextSize = 11
+
+local SpeedBox = Instance.new("TextBox", SpinFrame)
+SpeedBox.Size = UDim2.new(0.85, 0, 0, 30)
+SpeedBox.Position = UDim2.new(0.075, 0, 0.25, 0)
+SpeedBox.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+SpeedBox.TextColor3 = Color3.new(1,1,1)
+SpeedBox.Text = "700"
+Round(SpeedBox, 6)
+SpeedBox.Font = Enum.Font.Gotham
+SpeedBox.TextSize = 12
+
+local SpinToggle = Instance.new("TextButton", SpinFrame)
+SpinToggle.Size = UDim2.new(0.85, 0, 0, 35)
+SpinToggle.Position = UDim2.new(0.075, 0, 0.58, 0)
+SpinToggle.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
+SpinToggle.Text = "SPIN: OFF"
+SpinToggle.TextColor3 = Color3.new(1,1,1)
+Round(SpinToggle, 6)
+SpinToggle.Font = Enum.Font.GothamBold
+SpinToggle.TextSize = 12
+
 SpBtn.MouseButton1Click:Connect(function() spinGuiOpen = not spinGuiOpen; SpinFrame.Visible = spinGuiOpen end)
 
 local spinning = false
@@ -421,7 +415,11 @@ RunService.Heartbeat:Connect(function()
     if currentBPTarget ~= "" then
         local targetPlr = Players:FindFirstChild(currentBPTarget)
         if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
-            MagnetPart.CFrame = targetPlr.Character.HumanoidRootPart.CFrame
+            -- LOGIKA GASING MAUT (RADIUS 1)
+            orbitAngle = orbitAngle + math.rad(25)
+            local x = math.cos(orbitAngle) * 1
+            local z = math.sin(orbitAngle) * 1
+            MagnetPart.CFrame = targetPlr.Character.HumanoidRootPart.CFrame * CFrame.new(x, 1, z)
         end
     end
 end)
