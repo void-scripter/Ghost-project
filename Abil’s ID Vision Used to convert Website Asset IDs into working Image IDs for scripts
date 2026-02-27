@@ -1,0 +1,31 @@
+--[Abil’s ID Vision]
+--[Used to convert Website Asset IDs into working Image IDs for scripts]
+
+local InsertService = game:GetService("InsertService")
+
+local WEBSITE_ID = 1179108573 
+
+local function convertToImageId(decalId)
+    local success, asset = pcall(function()
+        return InsertService:LoadAsset(decalId)
+    end)
+
+    if success and asset then
+        local decal = asset:FindFirstChildWhichIsA("Decal")
+        if decal then
+            local imageId = decal.Texture
+            local cleanId = string.match(imageId, "%d+")
+            
+            print("---------------------------------")
+            print("SUCCESS! IMAGE ID FOUND:")
+            print("RESULT: " .. imageId)
+            print("NUMBERS ONLY: " .. cleanId)
+            print("---------------------------------")
+        end
+        asset:Destroy()
+    else
+        warn("Conversion Failed! Check the ID or Asset Privacy.")
+    end
+end
+
+convertToImageId(WEBSITE_ID)
