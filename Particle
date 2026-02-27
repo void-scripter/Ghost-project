@@ -1,0 +1,60 @@
+--[Abil's Particle System V14]
+--[Used to generate high-quality particles for all players in the server]
+
+local Players = game:GetService("Players")
+
+local IDS = {
+    "rbxassetid://1179108570", 
+    "rbxassetid://132155326",       
+    "rbxassetid://836805761",
+}
+
+local TOTAL_RATE = 60    
+local LIFETIME = 20      
+local SPEED = 15
+local SIZE = 1 
+
+local function applyParticleEffect(player)
+    local function setup(character)
+        if not character then return end
+        local head = character:WaitForChild("Head", 10)
+        if not head then return end
+
+        local attachment = Instance.new("Attachment")
+        attachment.Name = "Abil_Particle_Attachment"
+        attachment.Parent = head
+
+        local ratePerId = TOTAL_RATE / #IDS
+
+        for _, id in pairs(IDS) do
+            local emitter = Instance.new("ParticleEmitter")
+            emitter.Name = "AbilEmitter"
+            emitter.Texture = id
+            emitter.Rate = ratePerId
+            emitter.Lifetime = NumberRange.new(LIFETIME)
+            emitter.Speed = NumberRange.new(SPEED)
+            emitter.Size = NumberSequence.new(SIZE) 
+            emitter.SpreadAngle = Vector2.new(45, 45)
+            emitter.EmissionDirection = Enum.NormalId.Top
+            emitter.Acceleration = Vector3.new(0, 3, 0)
+            emitter.Parent = attachment
+        end
+        print("Success: Applied to " .. player.Name .. " | Size: " .. SIZE)
+    end
+
+    setup(player.Character)
+
+    player.CharacterAdded:Connect(function(char)
+        setup(char)
+    end)
+end
+
+for _, v in pairs(Players:GetPlayers()) do
+    applyParticleEffect(v)
+end
+
+Players.PlayerAdded:Connect(function(newPlayer)
+    applyParticleEffect(newPlayer)
+end)
+
+print("Abil's Particle System V14 Active!")
