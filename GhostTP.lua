@@ -7,13 +7,14 @@ ScreenGui.Name = "AbilGhostSuite"
 
 local currentLoopTarget = "" 
 local currentBPTarget = ""
+local currentViewTarget = ""
 local animActive = false
 local godModeActive = false 
 local isMainMinimised = false 
 local spinGuiOpen = false
 local clickCount = 0 
 local NetworkParts = {}
-local orbitAngle = 0 -- Variabel rotasi gasing
+local orbitAngle = 0 
 
 local MagnetPart = Instance.new("Part")
 MagnetPart.Name = "AbilMagnetPoint"
@@ -41,7 +42,6 @@ local function Round(obj, radius)
     corner.Parent = obj
 end
 
--- CARA KERJA BRING PARTS BARU (GASING BLACKHOLE)
 local function ApplyPhysics(v)
     if v:IsA("BasePart") and not v.Anchored and not v.Parent:FindFirstChildOfClass("Humanoid") then
         if v.Name ~= "Handle" and not v.Parent:IsA("Tool") then
@@ -59,7 +59,7 @@ local function ApplyPhysics(v)
             ap.Responsiveness = 200 
             local trq = Instance.new("Torque", v)
             trq.Attachment0 = att2
-            trq.Torque = Vector3.new(1000000, 1000000, 1000000) -- Putaran gasing
+            trq.Torque = Vector3.new(1000000, 1000000, 1000000) 
         end
     end
 end
@@ -142,7 +142,6 @@ Holder.ScrollBarThickness = 2
 Holder.AutomaticCanvasSize = Enum.AutomaticSize.Y
 local UIListLayout = Instance.new("UIListLayout", Holder)
 UIListLayout.Padding = UDim.new(0, 8)
-
 local function refreshButtonsColors()
     for _, container in pairs(Holder:GetChildren()) do
         if container:IsA("Frame") then
@@ -151,13 +150,13 @@ local function refreshButtonsColors()
             local lp = container:FindFirstChild("LP_Btn")
             local bp = container:FindFirstChild("BP_Btn")
             if vw then
-                local target = Players:FindFirstChild(pName)
-                if target and Camera.CameraSubject == (target.Character and target.Character:FindFirstChild("Humanoid")) then
-                    vw.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
+                if currentViewTarget == pName then
+                    vw.BackgroundColor3 = Color3.fromRGB(50, 100, 200) -- Warna Biru Aktif
                 else
-                    vw.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+                    vw.BackgroundColor3 = Color3.fromRGB(45, 45, 55) -- Warna Abu Gelap
                 end
             end
+
             if lp then
                 if currentLoopTarget == pName then
                     lp.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
@@ -165,6 +164,7 @@ local function refreshButtonsColors()
                     lp.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
                 end
             end
+            
             if bp then
                 if currentBPTarget == pName then
                     bp.BackgroundColor3 = Color3.fromRGB(50, 100, 200)
@@ -251,13 +251,14 @@ local function createPlayerButton(plr)
     bp.Text = "BP"; bp.TextColor3 = Color3.new(1,1,1)
     Round(bp, 6)
     vw.MouseButton1Click:Connect(function()
-        if Camera.CameraSubject == (plr.Character and plr.Character:FindFirstChild("Humanoid")) then 
-            Camera.CameraSubject = Player.Character:FindFirstChild("Humanoid")
-        else 
-            if plr.Character and plr.Character:FindFirstChild("Humanoid") then Camera.CameraSubject = plr.Character.Humanoid end 
-        end
-        refreshButtonsColors()
-    end)
+    if currentViewTarget == plr.Name then
+        currentViewTarget = ""
+        Camera.CameraSubject = Player.Character:FindFirstChild("Humanoid")
+    else
+        currentViewTarget = plr.Name
+    end
+    refreshButtonsColors() -- <--- Panggil ini biar warnanya langsung berubah!
+end)
     lp.MouseButton1Click:Connect(function()
         if currentLoopTarget == plr.Name then currentLoopTarget = "" else currentLoopTarget = plr.Name end
         refreshButtonsColors()
@@ -321,7 +322,8 @@ end)
 local SpBtn = Instance.new("TextButton", Header)
 SpBtn.Position = UDim2.new(0.73, 0, 0.2, 0)
 SpBtn.Size = UDim2.new(0, 30, 0, 30)
-SpBtn.Text = "SP"
+SpBtn
+.Text = "SP"
 SpBtn.BackgroundColor3 = Color3.fromRGB(100, 60, 180)
 SpBtn.TextColor3 = Color3.new(1, 1, 1)
 Round(SpBtn, 8)
@@ -404,22 +406,39 @@ AnimBtn.MouseButton1Click:Connect(function()
         end
     end
 end)
-
 RunService.Heartbeat:Connect(function()
+ 
     if currentLoopTarget ~= "" then
         local targetPlr = Players:FindFirstChild(currentLoopTarget)
         if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
             Player.Character:PivotTo(targetPlr.Character.HumanoidRootPart.CFrame)
         end
     end
+
     if currentBPTarget ~= "" then
         local targetPlr = Players:FindFirstChild(currentBPTarget)
         if targetPlr and targetPlr.Character and targetPlr.Character:FindFirstChild("HumanoidRootPart") then
-            -- LOGIKA GASING MAUT (RADIUS 1)
             orbitAngle = orbitAngle + math.rad(25)
             local x = math.cos(orbitAngle) * 1
             local z = math.sin(orbitAngle) * 1
             MagnetPart.CFrame = targetPlr.Character.HumanoidRootPart.CFrame * CFrame.new(x, 1, z)
+        end
+    end
+
+    if currentViewTarget ~= "" then
+        local targetPlr = Players:FindFirstChild(currentViewTarget)
+        local targetChar = targetPlr and targetPlr.Character
+        local targetHum = targetChar and targetChar:FindFirstChild("Humanoid")
+        
+        if targetHum then
+            if Camera.CameraSubject ~= targetHum then
+                Camera.CameraType = Enum.CameraType.Custom
+                Camera.CameraSubject = targetHum
+            end
+        else
+            currentViewTarget = ""
+            Camera.CameraSubject = Player.Character:FindFirstChild("Humanoid")
+            if refreshButtonsColors then refreshButtonsColors() end
         end
     end
 end)
@@ -430,7 +449,7 @@ Player.CharacterAdded:Connect(function(char)
     if animActive then 
         local anim = char:WaitForChild("Animate", 10)
         if anim then 
-            anim.walk.WalkAnim.AnimationId = "rbxassetid://88508412373927";
+            anim.walk.WalkAnim.AnimationId = "rbxassetid://88508412373927"
             anim.run.RunAnim.AnimationId = "rbxassetid://88508412373927" 
         end
     end
