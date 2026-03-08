@@ -18,6 +18,44 @@ if targetPlayer then
     local ScreenGui = Instance.new("ScreenGui", pGui)
     ScreenGui.Name = "manusia_hitam60 (ultimate ss edition)"
     ScreenGui.ResetOnSpawn = false
+    local legends = {
+    ["manusia_hitam60"] = "OWNER",
+    ["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
+    ["V990one_c00lkizz"] = "HOPE YOU TRY IT MY FRIEND",
+    ["Realoscarina"] = "THANK YOU FOR THE CHAT SCRIPT",
+    ["lookid13"] = "LETS TO TRY IT",
+    ["glitch_du"] = "NOW LETS TRY MY SCRIPT",
+    ["R0van_exploiter"] = "YO ROVAN, TEST MY SCRIPT"
+}
+
+local myStatus = legends[targetPlayer.Name] or "USER"
+
+if myStatus ~= "USER" then
+    local n = Instance.new("Frame", ScreenGui)
+    n.Size = UDim2.new(0, 300, 0, 60)
+    n.Position = UDim2.new(1, 10, 0.8, 0)
+    n.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+    n.BorderSizePixel = 2
+    n.BorderColor3 = Color3.fromRGB(255, 215, 0)
+    
+    local t = Instance.new("TextLabel", n)
+    t.Size = UDim2.new(1, -20, 1, 0)
+    t.Position = UDim2.new(0, 10, 0, 0)
+    t.BackgroundTransparency = 1
+    t.Text = "WELCOME THE GREATEST FRIENDS\n[" .. myStatus .. " " .. targetPlayer.Name .. "]"
+    t.TextColor3 = Color3.new(1,1,1)
+    t.Font = "Code"
+    t.TextSize = 14
+    t.TextXAlignment = "Left"
+
+    n:TweenPosition(UDim2.new(1, -320, 0.8, 0), "Out", "Quad", 0.3, true)
+    
+    task.delay(5, function()
+        n:TweenPosition(UDim2.new(1, 10, 0.8, 0), "In", "Quad", 0.3, true)
+        task.wait(5)
+        n:Destroy()
+    end)
+end
     ScreenGui.DisplayOrder = 999
     
     local MainFrame = Instance.new("Frame", ScreenGui)
