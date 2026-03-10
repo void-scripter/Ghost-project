@@ -50,9 +50,9 @@ if myStatus ~= "USER" then
 
     n:TweenPosition(UDim2.new(1, -320, 0.8, 0), "Out", "Quad", 0.3, true)
     
-    task.delay(5, function()
+    task.delay(20, function()
         n:TweenPosition(UDim2.new(1, 10, 0.8, 0), "In", "Quad", 0.3, true)
-        task.wait(5)
+        task.wait(50)
         n:Destroy()
     end)
 end
@@ -257,23 +257,16 @@ end
     end)
 
     makeBtn("Sensation", green, function()
-        task.spawn(function()
-            local sukses, pesanError = pcall(function()
-                require(100263845596551)({
-                    Target = targetPlayer.Name,
-                    Colors = {
-                        Color3.fromRGB(71, 148, 253),
-                        Color3.fromRGB(71, 253, 160)
-                    },
-                    Mode = "Standard"
-                })
-            end) 
-            
-            if not sukses then
-                warn("Gagal load Sensation: " .. pesanError)
-            end
-        end) 
-    end) 
+    task.spawn(function()
+        local sukses, pesanError = pcall(function()
+            require(100263845596551)(targetPlayer.Name)
+        end)
+
+    if not sukses then
+        warn("Gagal load Sensation: " .. pesanError)
+        end
+    end)
+end)
 
     makeBtn("Polaria", green, function()
     task.spawn(function()
@@ -414,6 +407,18 @@ end)
 
     if not sukses then
         warn("Gagal load Chat: " .. pesanError)
+        end
+    end)
+end)
+
+    makeBtn("MBG", black, function()
+    task.spawn(function()
+        local sukses, pesanError = pcall(function()
+            require(80602649511365).mbg(targetPlayer.Name)
+        end)
+
+    if not sukses then
+        warn("Gagal load MBG: " .. pesanError)
         end
     end)
 end)
