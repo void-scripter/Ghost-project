@@ -4,7 +4,6 @@ local targetPlayer = Players:FindFirstChild("manusia_hitam60") or Players:GetPla
 local whitelist = {"manusia_hitam60"}
 local isWhitelisted = false
 for _, name in pairs(whitelist) do if targetPlayer.Name == name then isWhitelisted = true break end end
-if not isWhitelisted then return end
 
 local ID_Main = "rbxassetid://71983226245811"
 local ID_Part = "rbxassetid://131552532497284"
