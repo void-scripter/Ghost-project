@@ -1,9 +1,5 @@
 local Players = game:GetService("Players")
-local targetPlayer = Players:FindFirstChild("manusia_hitam60") or Players:GetPlayers()[1]
-
-local whitelist = {"manusia_hitam60"}
-local isWhitelisted = false
-for _, name in pairs(whitelist) do if targetPlayer.Name == name then isWhitelisted = true break end end
+local targetPlayer = Players.LocalPlayer
 
 local ID_Main = "rbxassetid://71983226245811"
 local ID_Part = "rbxassetid://131552532497284"
