@@ -1,18 +1,21 @@
-local Players = game:GetService("Players")
-local targetPlayer = Players.LocalPlayer
-
-local ID_Main = "rbxassetid://71983226245811"
-local ID_Part = "rbxassetid://131552532497284"
-local ID_Jump = "rbxassetid://132225475210716"
-local ID_Music = "rbxassetid://138421944471718" 
-
-if targetPlayer then
-    local pGui = targetPlayer:WaitForChild("PlayerGui")
-    if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() end
-    
-    local ScreenGui = Instance.new("ScreenGui", pGui)
-    ScreenGui.Name = "manusia_hitam60 (ultimate ss edition)"
-    ScreenGui.ResetOnSpawn = false
+local Players=game:GetService("Players")
+local targetPlayer=Players.LocalPlayer
+if not targetPlayer then
+for _,p in pairs(Players:GetPlayers()) do
+targetPlayer=p
+break
+end
+end
+local pGui=targetPlayer:WaitForChild("PlayerGui",20)
+local ID_Main="rbxassetid://71983226245811"
+local ID_Part="rbxassetid://131552532497284"
+local ID_Jump="rbxassetid://132225475210716"
+local ID_Music="rbxassetid://138421944471718"
+if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() end
+local ScreenGui=Instance.new("ScreenGui",pGui)
+ScreenGui.Name="manusia_hitam60 (ultimate ss edition)"
+ScreenGui.ResetOnSpawn=false
+ScreenGui.DisplayOrder=999
     local legends = {
     ["manusia_hitam60"] = "OWNER",
     ["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
@@ -22,9 +25,7 @@ if targetPlayer then
     ["glitch_du"] = "NOW LETS TRY MY SCRIPT",
     ["R0van_exploiter"] = "YO ROVAN, TEST MY SCRIPT"
 }
-
 local myStatus = legends[targetPlayer.Name] or "USER"
-
 if myStatus ~= "USER" then
     local n = Instance.new("Frame", ScreenGui)
     n.Size = UDim2.new(0, 300, 0, 60)
@@ -32,8 +33,7 @@ if myStatus ~= "USER" then
     n.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
     n.BorderSizePixel = 2
     n.BorderColor3 = Color3.fromRGB(255, 215, 0)
-    
-    local t = Instance.new("TextLabel", n)
+        local t = Instance.new("TextLabel", n)
     t.Size = UDim2.new(1, -20, 1, 0)
     t.Position = UDim2.new(0, 10, 0, 0)
     t.BackgroundTransparency = 1
@@ -42,18 +42,15 @@ if myStatus ~= "USER" then
     t.Font = "Code"
     t.TextSize = 14
     t.TextXAlignment = "Left"
-
     n:TweenPosition(UDim2.new(1, -320, 0.8, 0), "Out", "Quad", 0.3, true)
-    
-    task.delay(20, function()
+        task.delay(20, function()
         n:TweenPosition(UDim2.new(1, 10, 0.8, 0), "In", "Quad", 0.3, true)
-        task.wait(50)
+        task.wait(20)
         n:Destroy()
     end)
 end
     ScreenGui.DisplayOrder = 999
-    
-    local MainFrame = Instance.new("Frame", ScreenGui)
+        local MainFrame = Instance.new("Frame", ScreenGui)
     local ToggleGui = Instance.new("ScreenGui", pGui)
     ToggleGui.Name = "AbilToggleSystem"
     ToggleGui.DisplayOrder = 1000 
@@ -64,7 +61,6 @@ end
     ToggleBtn.Image = "rbxassetid://71983226245811" 
     ToggleBtn.Draggable = true ToggleBtn.Active = true
     Instance.new("UICorner", ToggleBtn)
-
     ToggleBtn.MouseButton1Click:Connect(function()
         if MainFrame then
             MainFrame.Visible = not MainFrame.Visible 
@@ -75,8 +71,7 @@ end
     MainFrame.Position = UDim2.new(0.5, -210, 0.5, -135)
     MainFrame.Active = true MainFrame.Draggable = true
     Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 15)
-    MainFrame.Visible = true
-    
+    MainFrame.Visible = true    
     local MusicBtn = Instance.new("TextButton", MainFrame)
     MusicBtn.Size = UDim2.new(0, 50, 0, 25)
     MusicBtn.Position = UDim2.new(1, -60, 0, 5)
@@ -85,7 +80,6 @@ end
     MusicBtn.TextColor3 = Color3.new(1,1,1)
     MusicBtn.Font = "SourceSansBold" MusicBtn.TextSize = 12
     Instance.new("UICorner", MusicBtn)
-
     local StopMusicBtn = Instance.new("TextButton", MainFrame)
     StopMusicBtn.Size = UDim2.new(0, 50, 0, 25)
     StopMusicBtn.Position = UDim2.new(1, -115, 0, 5)
@@ -94,26 +88,22 @@ end
     StopMusicBtn.TextColor3 = Color3.new(1,1,1)
     StopMusicBtn.Font = "SourceSansBold" StopMusicBtn.TextSize = 12
     Instance.new("UICorner", StopMusicBtn)
-
     local isPlaying = false
     local bgm = Instance.new("Sound", game.Workspace)
     bgm.Name = "MH60_BGM"
     bgm.SoundId = ID_Music bgm.Looped = true bgm.Volume = 10000 
     local dist = Instance.new("DistortionSoundEffect", bgm) dist.Level = 0
-
     MusicBtn.MouseButton1Click:Connect(function()
         isPlaying = not isPlaying
         if isPlaying then bgm:Play() MusicBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
         else bgm:Stop() MusicBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50) end
     end)
-
     local Title = Instance.new("TextLabel", MainFrame)
     Title.Size = UDim2.new(1, 0, 0, 35)
     Title.Text = "  MANUSIA_HITAM60 (ULTIMATE SS EDITION)"
     Title.TextColor3 = Color3.new(0,0,0)
     Title.BackgroundTransparency = 1 Title.TextSize = 16
     Title.Font = "SourceSansBold" Title.TextXAlignment = "Left"
-
     local ButtonGrid = Instance.new("Frame", MainFrame)
     ButtonGrid.BackgroundTransparency = 1
     ButtonGrid.Position = UDim2.new(0, 10, 0, 45)
@@ -122,7 +112,6 @@ end
     Grid.CellSize = UDim2.new(0, 75, 0, 34)
     Grid.CellPadding = UDim2.new(0, 6, 0, 6)
     Grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
-
     local function makeBtn(name, color, func)
         local btn = Instance.new("TextButton", ButtonGrid)
         btn.Text = name btn.BackgroundColor3 = color btn.TextColor3 = Color3.new(1,1,1)
@@ -130,9 +119,7 @@ end
         Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
         btn.MouseButton1Click:Connect(func)
     end
-
     local blue, green, black = Color3.fromRGB(0, 170, 255), Color3.fromRGB(85, 170, 0), Color3.fromRGB(0, 0, 0)
-
     makeBtn("Skybox", blue, function()
         local Lighting = game:GetService("Lighting")
         for _, v in pairs(Lighting:GetChildren()) do if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") or v:IsA("PostProcessEffect") then v:Destroy() end end
@@ -142,13 +129,11 @@ end
         newSky.SkyboxBk = ID_Main newSky.SkyboxDn = ID_Main newSky.SkyboxFt = ID_Main
         newSky.SkyboxLf = ID_Main newSky.SkyboxRt = ID_Main newSky.SkyboxUp = ID_Main
     end)
-
     makeBtn("Decal Spam", blue, function()
         local faces = {"Front","Back","Top","Bottom","Left","Right"}
         for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then for _, f in pairs(faces) do local d = Instance.new("Decal", v) d.Texture = ID_Main d.Face = f end end end
     end)
-    
-    makeBtn("Particle", blue, function()
+        makeBtn("Particle", blue, function()
         local function applyParticleEffect(player)
             local function setup(character)
                 if not character then return end
@@ -167,8 +152,7 @@ end
         for _, v in pairs(Players:GetPlayers()) do applyParticleEffect(v) end
         Players.PlayerAdded:Connect(applyParticleEffect)
     end)
-    
-    makeBtn("Jumpscare", blue, function()
+        makeBtn("Jumpscare", blue, function()
         for _, p in pairs(Players:GetPlayers()) do task.spawn(function()
             local s = Instance.new("Sound", workspace) s.SoundId = ID_Jump s.Volume = 500 s:Play()
             local g = Instance.new("ScreenGui", p.PlayerGui) local i = Instance.new("ImageLabel", g)
@@ -176,27 +160,22 @@ end
             task.wait(8) g:Destroy() s:Destroy()
         end) end
     end)
-
     makeBtn("Message All", blue, function()
         local m = Instance.new("Message", workspace) m.Text = "MANUSIA_HITAM60 HACKED THIS GAME LOL!!!🤟😝🤟"
         task.delay(5, function() m:Destroy() end)
     end)
-
     makeBtn("Hint", blue, function()
         local h = Instance.new("Hint", workspace) h.Text = "MANUSIA_HITAM60 HACKED THIS FUCKING GAME!!! 🤟😝🤟"
         task.delay(9e9, function() h:Destroy() end)
     end)
-
     makeBtn("Unanchor All", blue, function()
         for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then v.Anchored = false end end
     end)
-
     makeBtn("Mr.Bean Admin", blue, function() 
     task.spawn(function()
         local sukses, pesanError = pcall(function()
             require(16426905729)(targetPlayer.Name)
         end)
-
     if not sukses then
         warn("Gagal load Mr.bean admin: " .. pesanError)
             end
@@ -207,33 +186,19 @@ end
          local sukses, pesanError = pcall(function()
             require(137870571533698):load(targetPlayer.Name)
         end)
-
     if not sukses then
          warn("Gagal load blue2spooky: " .. pesanError)
             end
         end)
     end)
-    makeBtn("Guns (R6)", blue, function() 
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(7633712551)(targetPlayer.Name, "Guns")
-        end)
-
-    if not sukses then 
-        warn("Gagal load Guns: " .. pesanError)
-            end
-        end)
-    end)
-    makeBtn("Shutdown", green, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE MANUSIA_HITAM60!!! 🤟😝🤟") end end)
+    makeBtn("Shutdown", blue, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE MANUSIA_HITAM60!!! 🤟😝🤟") end end)
     makeBtn("Kill All", green, function() for _, v in pairs(Players:GetPlayers()) do if v.Character then v.Character:BreakJoints() end end end)
-    
-    makeBtn("Disco", green, function() 
+        makeBtn("Disco", green, function() 
         task.spawn(function() game.Lighting.GlobalShadows = false
             while true do local c = Color3.fromHSV(math.random(), 1, 1) game.Lighting.Ambient = c game.Lighting.OutdoorAmbient = c task.wait(0.1) end 
         end) 
     end)
-  
-    makeBtn("Explode Rain", green, function() 
+      makeBtn("Explode Rain", green, function() 
         task.spawn(function() 
              local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
             while true do
@@ -250,171 +215,150 @@ end
             end 
         end) 
     end)
-
     makeBtn("Sensation", green, function()
     task.spawn(function()
         local sukses, pesanError = pcall(function()
             require(100263845596551)(targetPlayer.Name)
         end)
-
     if not sukses then
         warn("Gagal load Sensation: " .. pesanError)
         end
     end)
 end)
-
-    makeBtn("Polaria", green, function()
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(110951620907921):Pload(targetPlayer.Name)
-        end)
-
-        if not sukses then
-            warn("Gagal load Polaria: " .. pesanError)
-        end
-    end)
+makeBtn("Polaria", green, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(110951620907921):Pload(targetPlayer.Name)
 end)
-
-    makeBtn("Face All", green, function()
-        for _, p in pairs(Players:GetPlayers()) do if p.Character and p.Character:FindFirstChild("Head") then
-            local g1 = Instance.new("BillboardGui", p.Character.Head) g1.Size = UDim2.new(2.5,0,2.5,0) g1.AlwaysOnTop = true
-            local t1 = Instance.new("ImageLabel", g1) t1.Image = ID_Part t1.Size = UDim2.new(1,0,1,0) t1.BackgroundTransparency = 1
-        end end
-    end)
-
-    makeBtn("Rainbow Ball", green, function() 
-        task.spawn(function() 
-            local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
-            while true do
-                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then spawnPos = targetPlayer.Character.HumanoidRootPart.Position end
-                local b = Instance.new("Part", workspace) b.Shape = Enum.PartType.Ball b.Position = spawnPos + Vector3.new(math.random(-499,499), 250, math.random(-499,499))
-                b.Size = Vector3.new(4,4,4) b.Color = Color3.fromHSV(math.random(),1,1) b.Material = Enum.Material.Neon b.CanCollide = true task.wait(0.1)
-            end 
-        end) 
-    end)
-
-    makeBtn("Happy Hub", green, function()
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-           require(109229360070706):Hload(targetPlayer.Name)
-       end)
-
-        if not sukses then
-            warn("Gagal load Happy hub: " .. pesanError)
-         end
-    end)
-end)
-    makeBtn("MatzV5", green, function() 
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(139176740647330).MATZ(targetPlayer.Name)
-        end)
-        
-        if not sukses then
-            warn("Gagal load MatzV5: " .. pesanError)
-        end
-    end)
-end)
-    makeBtn("Rush", black, function()
-        task.spawn(function()
-            local sukses, pesanError = pcall(function()
-                require(104732504345735).jumpscare(targetPlayer.Name)
-            end)
-
-            if not sukses then
-                warn("Gagal load rush: " .. pesanError)
-                end
-            end)
-        end)
-    makeBtn("Dark Mango", black, function() 
-    task.spawn(function()
-        local sukses, pesanError  = pcall(function()
-            require(122775270569362)(targetPlayer.Name)
-        end)
-
-    if not sukses then 
-        warn("Gagal load Dark mango: " .. pesanError)
-        end
-    end)
-end)
-    makeBtn("F3X", black, function() 
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(4869378421).F3X(targetPlayer.Name)
-        end)
-
-    if not sukses then
-        warn("Gagal load F3X: " .. pesanError)
-        end
-    end)
-end)
-    makeBtn("RoLoader", black, function()
-    task.spawn(function()
-      local sukses, pesanError = pcall(function()
-            require(112796675826571).RoLoader(targetPlayer.Name) 
-      end)
-
-    if not sukses then
-      warn("Gagal load Roloader: " .. pesanError)
-        end
-    end)
-end)
-
-    makeBtn("Fling All", black, function()
-        for _, v in pairs(Players:GetPlayers()) do
-            if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
-                local hrp = v.Character.HumanoidRootPart
-                local bv = Instance.new("BodyVelocity", hrp)
-                bv.Velocity = Vector3.new(0, 9e9, 0)
-                bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-                task.delay(0.2, function() bv:Destroy() end)
-            end
-        end
-    end)
-    makeBtn("RC7", black, function() 
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(12350030542).RC7(targetPlayer.Name)
-         end)
-
-    if not sukses then
-        warn("Gagal load RC7: " .. pesanError)
-        end
-    end)
-end)
-    makeBtn("Dev console", black, function() 
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(6016746796):Console(targetPlayer.Name)
-        end)
-
-    if not sukses then
-        warn("Gagal load Dev console: " .. pesanError)
-        end
-    end)
-end)
-
-    makeBtn("Chat", black, function()
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(77886688623397)()
-        end)
-
-    if not sukses then
-        warn("Gagal load Chat: " .. pesanError)
-        end
-    end)
-end)
-
-    makeBtn("MBG", black, function()
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(80602649511365).mbg(targetPlayer.Name)
-        end)
-
-    if not sukses then
-        warn("Gagal load MBG: " .. pesanError)
-        end
-    end)
-end)
+if not sukses then
+warn("Gagal load Polaria: " .. pesanError)
 end
+end)
+end)
+makeBtn("Face All", green, function()
+for _, p in pairs(Players:GetPlayers()) do if p.Character and p.Character:FindFirstChild("Head") then
+local g1 = Instance.new("BillboardGui", p.Character.Head) g1.Size = UDim2.new(2.5,0,2.5,0) g1.AlwaysOnTop = true
+local t1 = Instance.new("ImageLabel", g1) t1.Image = ID_Part t1.Size = UDim2.new(1,0,1,0) t1.BackgroundTransparency = 1
+end end
+end)
+makeBtn("Rainbow Ball", green, function() 
+task.spawn(function() 
+local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
+while true do
+if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then spawnPos = targetPlayer.Character.HumanoidRootPart.Position end
+local b = Instance.new("Part", workspace) b.Shape = Enum.PartType.Ball b.Position = spawnPos + Vector3.new(math.random(-499,499), 250, math.random(-499,499))
+b.Size = Vector3.new(4,4,4) b.Color = Color3.fromHSV(math.random(),1,1) b.Material = Enum.Material.Neon b.CanCollide = true task.wait(0.1)
+end 
+end) 
+end)
+makeBtn("Happy Hub", green, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(109229360070706):Hload(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Happy hub: " .. pesanError)
+end
+end)
+end)
+makeBtn("MatzV5", green, function() 
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(139176740647330).MATZ(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load MatzV5: " .. pesanError)
+end
+end)
+end)
+makeBtn("Rush", green, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(104732504345735).jumpscare(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load rush: " .. pesanError)
+end
+end)
+end)
+makeBtn("Dark Mango", black, function() 
+task.spawn(function()
+local sukses, pesanError  = pcall(function()
+require(122775270569362)(targetPlayer.Name)
+end)
+if not sukses then 
+warn("Gagal load Dark mango: " .. pesanError)
+ end
+end)
+end)
+makeBtn("RoLoader", black, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(112796675826571).RoLoader(targetPlayer.Name) 
+end)
+if not sukses then
+warn("Gagal load Roloader: " .. pesanError)
+end
+end)
+end)
+makeBtn("Fling All", black, function()
+for _, v in pairs(Players:GetPlayers()) do
+if v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+local hrp = v.Character.HumanoidRootPart
+local bv = Instance.new("BodyVelocity", hrp)
+bv.Velocity = Vector3.new(0, 9e9, 0)
+bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+task.delay(0.2, function() bv:Destroy() end)
+end
+end
+end)
+makeBtn("RC7", black, function() 
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(12350030542).RC7(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load RC7: " .. pesanError)
+end
+end)
+end)
+makeBtn("Dev console", black, function() 
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(6016746796):Console(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Dev console: " .. pesanError)
+end
+end)
+end)
+makeBtn("Chat", black, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(77886688623397)()
+end)
+if not sukses then
+warn("Gagal load Chat: " .. pesanError)
+end
+end)
+end)
+makeBtn("MBG", black, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(80602649511365).mbg(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load MBG: " .. pesanError)
+ end
+end)
+end)
+makeBtn("Morph Gui", black, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(124675875890869).load(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Morph Gui: " .. pesanError)
+end
+end)
+end)
