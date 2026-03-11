@@ -362,3 +362,13 @@ warn("Gagal load Morph Gui: " .. pesanError)
 end
 end)
 end)
+makeBtn("Project Taco", black, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(74641078403734).PROJECTTAC0Z(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Project Taco: " .. pesanError)
+end
+end)
+end)
