@@ -1,12 +1,13 @@
-local Players=game:GetService("Players")
-local targetPlayer=Players.LocalPlayer
-if not targetPlayer then
-for _,p in pairs(Players:GetPlayers()) do
-targetPlayer=p
-break
+local Players = game:GetService("Players")
+local targetPlayer = owner
+
+if not targetPlayer or not targetPlayer:IsA("Player") then
+for _, p in pairs(Players:GetPlayers()) do
+targetPlayer = p
 end
 end
-local pGui=targetPlayer:WaitForChild("PlayerGui",20)
+
+local pGui = targetPlayer:WaitForChild("PlayerGui", 20)
 local ID_Main="rbxassetid://71983226245811"
 local ID_Part="rbxassetid://131552532497284"
 local ID_Jump="rbxassetid://132225475210716"
@@ -235,11 +236,15 @@ warn("Gagal load Polaria: " .. pesanError)
 end
 end)
 end)
-makeBtn("Face All", green, function()
-for _, p in pairs(Players:GetPlayers()) do if p.Character and p.Character:FindFirstChild("Head") then
-local g1 = Instance.new("BillboardGui", p.Character.Head) g1.Size = UDim2.new(2.5,0,2.5,0) g1.AlwaysOnTop = true
-local t1 = Instance.new("ImageLabel", g1) t1.Image = ID_Part t1.Size = UDim2.new(1,0,1,0) t1.BackgroundTransparency = 1
-end end
+makeBtn("Dominant", green, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(121425622240385).dominantultimate(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Dominant: " .. pesanError)
+end
+end)
 end)
 makeBtn("Rainbow Ball", green, function() 
 task.spawn(function() 
