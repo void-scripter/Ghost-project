@@ -1,5 +1,5 @@
 local Players = game:GetService("Players")
-local myName = "your Roblox username"
+local myName = "your username"
 local targetPlayer = Players:FindFirstChild(myName)
 if not targetPlayer then
 return
