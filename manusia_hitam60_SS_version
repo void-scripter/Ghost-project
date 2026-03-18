@@ -1,22 +1,30 @@
 local Players = game:GetService("Players")
-local targetPlayer = owner
-
-if not targetPlayer or not targetPlayer:IsA("Player") then
-for _, p in pairs(Players:GetPlayers()) do
-targetPlayer = p
+local myName = "your Roblox username"
+local targetPlayer = Players:FindFirstChild(myName)
+if not targetPlayer then
+return
+end
+local pGui = targetPlayer:FindFirstChildOfClass("PlayerGui")
+if not pGui then
+local startTime = tick()
+while not pGui and tick() - startTime < 10 do
+pGui = targetPlayer:FindFirstChildOfClass("PlayerGui")
+task.wait(0.2)
 end
 end
-
-local pGui = targetPlayer:WaitForChild("PlayerGui", 20)
-local ID_Main="rbxassetid://71983226245811"
-local ID_Part="rbxassetid://131552532497284"
-local ID_Jump="rbxassetid://132225475210716"
-local ID_Music="rbxassetid://138421944471718"
-if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() end
-local ScreenGui=Instance.new("ScreenGui",pGui)
-ScreenGui.Name="manusia_hitam60 (ultimate ss edition)"
-ScreenGui.ResetOnSpawn=false
-ScreenGui.DisplayOrder=999
+if pGui then
+local ID_Main = "rbxassetid://71983226245811"
+local ID_Part = "rbxassetid://131552532497284"
+local ID_Jump = "rbxassetid://132225475210716"
+local ID_Music = "rbxassetid://138421944471718"
+if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then 
+pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() 
+end
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "manusia_hitam60 (ultimate ss edition)"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.DisplayOrder = 999
+ScreenGui.Parent = pGui
     local legends = {
     ["manusia_hitam60"] = "OWNER",
     ["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
@@ -387,3 +395,4 @@ warn("Gagal load Chat Bypass: " .. pesanError)
 end
 end)
 end)
+end
