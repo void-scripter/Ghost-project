@@ -1,4 +1,3 @@
-
 local Players = game:GetService("Players")
 local myName = "manusia_hitam60"
 local targetPlayer = Players:FindFirstChild(myName)
@@ -15,7 +14,7 @@ end
 end
 if pGui then
 local ID_Main = "rbxassetid://131552532497284"
-local ID_Music = "rbxassetid://1847661821"
+local ID_Music = "rbxassetid://139328999836171"
 if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then 
 pGui["manusia_hitam60 (ultimate ss edition)"]:Destroy() 
 end
@@ -111,6 +110,7 @@ bgm.Name = "MH60_GLOBAL_BGM"
 bgm.SoundId = ID_Music
 bgm.Looped = true
 bgm.Volume = 100000
+bgm.PlaybackSpeed = 0.07
 bgm:Play()
 end)
 StopMusicBtn.MouseButton1Click:Connect(function()
