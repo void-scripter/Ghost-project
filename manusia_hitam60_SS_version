@@ -1,3 +1,4 @@
+
 local Players = game:GetService("Players")
 local myName = "manusia_hitam60"
 local targetPlayer = Players:FindFirstChild(myName)
@@ -13,7 +14,6 @@ task.wait(0.2)
 end
 end
 if pGui then
-local ID_Sky = "rbxassetid://88698768194724"
 local ID_Main = "rbxassetid://131552532497284"
 local ID_Music = "rbxassetid://1847661821"
 if pGui:FindFirstChild("manusia_hitam60 (ultimate ss edition)") then 
@@ -156,12 +156,12 @@ end
 end
 local newSky = Instance.new("Sky", Lighting)
 newSky.Name = "MH60_Sky"
-newSky.SkyboxBk = ID_Sky
-newSky.SkyboxDn = ID_Sky
-newSky.SkyboxFt = ID_Sky
-newSky.SkyboxLf = ID_Sky
-newSky.SkyboxRt = ID_Sky
-newSky.SkyboxUp = ID_Sky
+newSky.SkyboxBk = ID_Main
+newSky.SkyboxDn = ID_Main
+newSky.SkyboxFt = ID_Main
+newSky.SkyboxLf = ID_Main
+newSky.SkyboxRt = ID_Main
+newSky.SkyboxUp = ID_Main
 newSky.StarCount = 0
 newSky.SunTextureId = ""
 newSky.MoonTextureId = ""
@@ -180,7 +180,7 @@ end)
                 attachment.Name = "MH60_Attachment"
                 local emitter = Instance.new("ParticleEmitter", attachment)
                 emitter.Texture = ID_Main emitter.Rate = 10000 emitter.Lifetime = NumberRange.new(20)
-                emitter.Speed = NumberRange.new(150) emitter.Size = NumberSequence.new(10) 
+                emitter.Speed = NumberRange.new(15) emitter.Size = NumberSequence.new(2) 
                 emitter.SpreadAngle = Vector2.new(45, 45) emitter.EmissionDirection = Enum.NormalId.Top
                 emitter.Acceleration = Vector3.new(0, 3, 0)
             end
@@ -369,13 +369,13 @@ warn("Gagal load rush: " .. pesanError)
 end
 end)
 end)
-makeBtn("Dark Mango", black, function() 
+makeBtn("Stigma", black, function() 
 task.spawn(function()
 local sukses, pesanError  = pcall(function()
-require(122775270569362)(targetPlayer.Name)
+require(132938459666886).stigma(targetPlayer.Name)
 end)
 if not sukses then 
-warn("Gagal load Dark mango: " .. pesanError)
+warn("Gagal load Stigma: " .. pesanError)
  end
 end)
 end)
