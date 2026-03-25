@@ -1,5 +1,5 @@
 local Players = game:GetService("Players")
-local myName = "manusia_hitam60"
+local myName = "your fucking name here"
 local targetPlayer = Players:FindFirstChild(myName)
 if not targetPlayer then
 return
@@ -21,58 +21,58 @@ end
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "manusia_hitam60 (ultimate ss edition)"
 ScreenGui.ResetOnSpawn = false
-ScreenGui.DisplayOrder = 999
+ScreenGui.DisplayOrder = 99999
 ScreenGui.Parent = pGui
-    local legends = {
-    ["manusia_hitam60"] = "OWNER",
-    ["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
-    ["V990one_c00lkizz"] = "HOPE YOU TRY IT MY FRIEND",
-    ["Realoscarina"] = "THANK YOU FOR THE CHAT SCRIPT",
-    ["lookid13"] = "LETS TO TRY IT",
-    ["glitch_du"] = "NOW LETS TRY MY SCRIPT",
-    ["R0van_exploiter"] = "YO ROVAN, TEST MY SCRIPT"
+local legends = {
+["manusia_hitam60"] = "not a friends, but OWNER",
+["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
+["V990one_c00lkizz"] = "YOOOOYOU TRY IT MY FRIEND",
+["Realoscarina"] = "THANK YOU FOR THE CHAT SCRIPT",
+["lookid13"] = "LETS TO TRY IT",
+["glitch_du"] = "NOW LETS TRY MY SCRIPT",
+["R0van_exploiter"] = "YO ROVAN, TEST MY SCRIPT"
 }
 local myStatus = legends[targetPlayer.Name] or "USER"
 if myStatus ~= "USER" then
-    local n = Instance.new("Frame", ScreenGui)
-    n.Size = UDim2.new(0, 300, 0, 60)
-    n.Position = UDim2.new(1, 10, 0.8, 0)
-    n.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
-    n.BorderSizePixel = 2
-    n.BorderColor3 = Color3.fromRGB(255, 215, 0)
-        local t = Instance.new("TextLabel", n)
-    t.Size = UDim2.new(1, -20, 1, 0)
-    t.Position = UDim2.new(0, 10, 0, 0)
-    t.BackgroundTransparency = 1
-    t.Text = "WELCOME THE GREATEST FRIENDS\n[" .. myStatus .. " " .. targetPlayer.Name .. "]"
-    t.TextColor3 = Color3.new(1,1,1)
-    t.Font = "Code"
-    t.TextSize = 14
-    t.TextXAlignment = "Left"
-    n:TweenPosition(UDim2.new(1, -320, 0.8, 0), "Out", "Quad", 0.3, true)
-        task.delay(20, function()
-        n:TweenPosition(UDim2.new(1, 10, 0.8, 0), "In", "Quad", 0.3, true)
-        task.wait(20)
-        n:Destroy()
-    end)
+local n = Instance.new("Frame", ScreenGui)
+n.Size = UDim2.new(0, 300, 0, 60)
+n.Position = UDim2.new(1, 10, 0.8, 0)
+n.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+n.BorderSizePixel = 2
+n.BorderColor3 = Color3.fromRGB(255, 215, 0)
+local t = Instance.new("TextLabel", n)
+t.Size = UDim2.new(1, -20, 1, 0)
+t.Position = UDim2.new(0, 10, 0, 0)
+t.BackgroundTransparency = 1
+t.Text = "WELCOME THE GREATEST FRIENDS\n[" .. myStatus .. " " .. targetPlayer.Name .. "]"
+t.TextColor3 = Color3.new(1,1,1)
+t.Font = "Code"
+t.TextSize = 14
+t.TextXAlignment = "Left"
+n:TweenPosition(UDim2.new(1, -320, 0.8, 0), "Out", "Quad", 0.3, true)
+task.delay(20, function()
+n:TweenPosition(UDim2.new(1, 10, 0.8, 0), "In", "Quad", 0.3, true)
+task.wait(20)
+n:Destroy()
+end)
 end
-    ScreenGui.DisplayOrder = 999
-        local MainFrame = Instance.new("Frame", ScreenGui)
-    local ToggleGui = Instance.new("ScreenGui", pGui)
-    ToggleGui.Name = "AbilToggleSystem"
-    ToggleGui.DisplayOrder = 1000 
-    ToggleGui.ResetOnSpawn = false
-    local ToggleBtn = Instance.new("ImageButton", ToggleGui)
-    ToggleBtn.Size = UDim2.new(0, 40, 0, 40)
-    ToggleBtn.Position = UDim2.new(0, 5, 0.5, -20) 
-    ToggleBtn.Image = "rbxassetid://71983226245811" 
-    ToggleBtn.Draggable = true ToggleBtn.Active = true
-    Instance.new("UICorner", ToggleBtn)
-    ToggleBtn.MouseButton1Click:Connect(function()
-        if MainFrame then
-            MainFrame.Visible = not MainFrame.Visible 
-        end
-    end)
+ScreenGui.DisplayOrder = 999999
+local MainFrame = Instance.new("Frame", ScreenGui)
+local ToggleGui = Instance.new("ScreenGui", pGui)
+ToggleGui.Name = "AbilToggleSystem"
+ToggleGui.DisplayOrder = 1000 
+ToggleGui.ResetOnSpawn = false
+local ToggleBtn = Instance.new("ImageButton", ToggleGui)
+ToggleBtn.Size = UDim2.new(0, 40, 0, 40)
+ToggleBtn.Position = UDim2.new(0, 5, 0.5, -20) 
+ToggleBtn.Image = "rbxassetid://71983226245811" 
+ToggleBtn.Draggable = true ToggleBtn.Active = true
+Instance.new("UICorner", ToggleBtn)
+ToggleBtn.MouseButton1Click:Connect(function()
+if MainFrame then
+MainFrame.Visible = not MainFrame.Visible 
+end
+end)
 MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
 MainFrame.Size = UDim2.new(0, 420, 0, 300)
 MainFrame.Position = UDim2.new(0.5, -210, 0.5, -135)
@@ -125,28 +125,28 @@ end
 end
 end
 end)
-    local Title = Instance.new("TextLabel", MainFrame)
-    Title.Size = UDim2.new(1, 0, 0, 35)
-    Title.Text = "  MANUSIA_HITAM60 (ULTIMATE SS EDITION)"
-    Title.TextColor3 = Color3.new(0,0,0)
-    Title.BackgroundTransparency = 1 Title.TextSize = 16
-    Title.Font = "SourceSansBold" Title.TextXAlignment = "Left"
-    local ButtonGrid = Instance.new("Frame", MainFrame)
-    ButtonGrid.BackgroundTransparency = 1
-    ButtonGrid.Position = UDim2.new(0, 10, 0, 45)
-    ButtonGrid.Size = UDim2.new(1, -20, 1, -55)
-    local Grid = Instance.new("UIGridLayout", ButtonGrid)
-    Grid.CellSize = UDim2.new(0, 75, 0, 34)
-    Grid.CellPadding = UDim2.new(0, 6, 0, 6)
-    Grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    local function makeBtn(name, color, func)
-        local btn = Instance.new("TextButton", ButtonGrid)
-        btn.Text = name btn.BackgroundColor3 = color btn.TextColor3 = Color3.new(1,1,1)
-        btn.Font = "SourceSansBold" btn.TextSize = 9 btn.TextWrapped = true
-        Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
-        btn.MouseButton1Click:Connect(func)
-    end
-    local blue, green, black = Color3.fromRGB(0, 170, 255), Color3.fromRGB(85, 170, 0), Color3.fromRGB(0, 0, 0)
+local Title = Instance.new("TextLabel", MainFrame)
+Title.Size = UDim2.new(1, 0, 0, 35)
+Title.Text = "  MANUSIA_HITAM60 (ULTIMATE SS EDITION)"
+Title.TextColor3 = Color3.new(0,0,0)
+Title.BackgroundTransparency = 1 Title.TextSize = 16
+Title.Font = "SourceSansBold" Title.TextXAlignment = "Left"
+local ButtonGrid = Instance.new("Frame", MainFrame)
+ButtonGrid.BackgroundTransparency = 1
+ButtonGrid.Position = UDim2.new(0, 10, 0, 45)
+ButtonGrid.Size = UDim2.new(1, -20, 1, -55)
+local Grid = Instance.new("UIGridLayout", ButtonGrid)
+Grid.CellSize = UDim2.new(0, 75, 0, 34)
+Grid.CellPadding = UDim2.new(0, 6, 0, 6)
+Grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
+local function makeBtn(name, color, func)
+local btn = Instance.new("TextButton", ButtonGrid)
+btn.Text = name btn.BackgroundColor3 = color btn.TextColor3 = Color3.new(1,1,1)
+btn.Font = "SourceSansBold" btn.TextSize = 9 btn.TextWrapped = true
+Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+btn.MouseButton1Click:Connect(func)
+end
+local blue, green, black = Color3.fromRGB(0, 170, 255), Color3.fromRGB(85, 170, 0), Color3.fromRGB(0, 0, 0)
 makeBtn("Skybox", blue, function()
 local Lighting = game:GetService("Lighting")
 for i, v in next, Lighting:GetChildren() do
@@ -166,29 +166,29 @@ newSky.StarCount = 0
 newSky.SunTextureId = ""
 newSky.MoonTextureId = ""
 end)
-    makeBtn("Decal Spam", blue, function()
-        local faces = {"Front","Back","Top","Bottom","Left","Right"}
-        for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then for _, f in pairs(faces) do local d = Instance.new("Decal", v) d.Texture = ID_Main d.Face = f end end end
-    end)
-        makeBtn("Particle", blue, function()
-        local function applyParticleEffect(player)
-            local function setup(character)
-                if not character then return end
-                local head = character:WaitForChild("Head", 10)
-                if not head then return end
-                local attachment = Instance.new("Attachment", head)
-                attachment.Name = "MH60_Attachment"
-                local emitter = Instance.new("ParticleEmitter", attachment)
-                emitter.Texture = ID_Main emitter.Rate = 10000 emitter.Lifetime = NumberRange.new(20)
-                emitter.Speed = NumberRange.new(15) emitter.Size = NumberSequence.new(2) 
-                emitter.SpreadAngle = Vector2.new(45, 45) emitter.EmissionDirection = Enum.NormalId.Top
-                emitter.Acceleration = Vector3.new(0, 3, 0)
-            end
-            setup(player.Character) player.CharacterAdded:Connect(setup)
-        end
-        for _, v in pairs(Players:GetPlayers()) do applyParticleEffect(v) end
-        Players.PlayerAdded:Connect(applyParticleEffect)
-    end)
+makeBtn("Decal Spam", blue, function()
+local faces = {"Front","Back","Top","Bottom","Left","Right"}
+for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then for _, f in pairs(faces) do local d = Instance.new("Decal", v) d.Texture = ID_Main d.Face = f end end end
+end)
+makeBtn("Particle", blue, function()
+local function applyParticleEffect(player)
+local function setup(character)
+if not character then return end
+local head = character:WaitForChild("Head", 10)
+if not head then return end
+local attachment = Instance.new("Attachment", head)
+attachment.Name = "MH60_Attachment"
+local emitter = Instance.new("ParticleEmitter", attachment)
+emitter.Texture = ID_Main emitter.Rate = 10000 emitter.Lifetime = NumberRange.new(20)
+emitter.Speed = NumberRange.new(15) emitter.Size = NumberSequence.new(2) 
+emitter.SpreadAngle = Vector2.new(45, 45) emitter.EmissionDirection = Enum.NormalId.Top
+emitter.Acceleration = Vector3.new(0, 3, 0)
+end
+setup(player.Character) player.CharacterAdded:Connect(setup)
+end
+for _, v in pairs(Players:GetPlayers()) do applyParticleEffect(v) end
+Players.PlayerAdded:Connect(applyParticleEffect)
+end)
 makeBtn("666", blue, function()
 for i,v in next,workspace:children''do
 if(v:IsA'BasePart')then
@@ -244,70 +244,70 @@ end
 end
 xds(game.Workspace)
 end)
-    makeBtn("Message All", blue, function()
-        local m = Instance.new("Message", workspace) m.Text = "MANUSIA_HITAM60 HACKED THIS GAME LOL!!!"
-        task.delay(5, function() m:Destroy() end)
-    end)
-    makeBtn("Hint", blue, function()
-        local h = Instance.new("Hint", workspace) h.Text = "MANUSIA_HITAM60 HACKED THIS FUCKING GAME!!! "
-        task.delay(9e9, function() h:Destroy() end)
-    end)
-    makeBtn("Unanchor All", blue, function()
-        for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then v.Anchored = false end end
-    end)
-    makeBtn("Mr.Bean Admin", blue, function() 
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(16426905729)(targetPlayer.Name)
-        end)
-    if not sukses then
-        warn("Gagal load Mr.bean admin: " .. pesanError)
-            end
-        end)
-    end)
-    makeBtn("Blue2Spooky", blue, function()
-    task.spawn(function()
-         local sukses, pesanError = pcall(function()
-            require(137870571533698):load(targetPlayer.Name)
-        end)
-    if not sukses then
-         warn("Gagal load blue2spooky: " .. pesanError)
-            end
-        end)
-    end)
-    makeBtn("Shutdown", blue, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE MANUSIA_HITAM60!!!") end end)
-    makeBtn("Kill All", green, function() for _, v in pairs(Players:GetPlayers()) do if v.Character then v.Character:BreakJoints() end end end)
-        makeBtn("Disco", green, function() 
-        task.spawn(function() game.Lighting.GlobalShadows = false
-            while true do local c = Color3.fromHSV(math.random(), 1, 1) game.Lighting.Ambient = c game.Lighting.OutdoorAmbient = c task.wait(0.1) end 
-        end) 
-    end)
-      makeBtn("Explode Rain", green, function() 
-        task.spawn(function() 
-             local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
-            while true do
-                if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then spawnPos = targetPlayer.Character.HumanoidRootPart.Position end
-                local b = Instance.new("Part", workspace) b.Shape = Enum.PartType.Ball b.Size = Vector3.new(3,3,3)
-                b.Position = spawnPos + Vector3.new(math.random(-499,499), 200, math.random(-499,499))
-                b.Color = Color3.new(1,0,0) b.Material = Enum.Material.Neon
-                b.Touched:Connect(function() 
-                    local ex = Instance.new("Explosion", workspace) ex.Position = b.Position ex.BlastRadius = 25
-                    ex.Hit:Connect(function(hit) if hit and hit:IsA("BasePart") and not hit:IsDescendantOf(targetPlayer.Character) then hit.Anchored = false end end)
-                    b:Destroy() 
-                end) 
-                task.wait(0.05)
-            end 
-        end) 
-    end)
-    makeBtn("Sensation", green, function()
-    task.spawn(function()
-        local sukses, pesanError = pcall(function()
-            require(100263845596551)(targetPlayer.Name)
-        end)
-    if not sukses then
-        warn("Gagal load Sensation: " .. pesanError)
-        end
-    end)
+makeBtn("Message All", blue, function()
+local m = Instance.new("Message", workspace) m.Text = "MANUSIA_HITAM60 HACKED THIS GAME LOL!!!"
+task.delay(5, function() m:Destroy() end)
+end)
+makeBtn("Hint", blue, function()
+local h = Instance.new("Hint", workspace) h.Text = "MANUSIA_HITAM60 HACKED THIS FUCKING GAME!!! "
+task.delay(9e9, function() h:Destroy() end)
+end)
+makeBtn("Unanchor All", blue, function()
+for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then v.Anchored = false end end
+end)
+makeBtn("Mr.Bean Admin", blue, function() 
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(16426905729)(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Mr.bean admin: " .. pesanError)
+end
+end)
+end)
+makeBtn("Blue2Spooky", blue, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(137870571533698):load(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load blue2spooky: " .. pesanError)
+end
+end)
+end)
+makeBtn("Shutdown", blue, function() for _, v in pairs(Players:GetPlayers()) do v:Kick("THE SERVER SHOUTDOWN BECAUSE MANUSIA_HITAM60!!!") end end)
+makeBtn("Kill All", green, function() for _, v in pairs(Players:GetPlayers()) do if v.Character then v.Character:BreakJoints() end end end)
+makeBtn("Disco", green, function() 
+task.spawn(function() game.Lighting.GlobalShadows = false
+while true do local c = Color3.fromHSV(math.random(), 1, 1) game.Lighting.Ambient = c game.Lighting.OutdoorAmbient = c task.wait(0.1) end 
+end) 
+end)
+makeBtn("Explode Rain", green, function() 
+task.spawn(function() 
+local spawnPos = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,0,0)
+while true do
+if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then spawnPos = targetPlayer.Character.HumanoidRootPart.Position end
+local b = Instance.new("Part", workspace) b.Shape = Enum.PartType.Ball b.Size = Vector3.new(3,3,3)
+b.Position = spawnPos + Vector3.new(math.random(-499,499), 200, math.random(-499,499))
+b.Color = Color3.new(1,0,0) b.Material = Enum.Material.Neon
+b.Touched:Connect(function() 
+local ex = Instance.new("Explosion", workspace) ex.Position = b.Position ex.BlastRadius = 25
+ex.Hit:Connect(function(hit) if hit and hit:IsA("BasePart") and not hit:IsDescendantOf(targetPlayer.Character) then hit.Anchored = false end end)
+b:Destroy() 
+end) 
+task.wait(0.05)
+end 
+end) 
+end)
+makeBtn("Sensation", green, function()
+task.spawn(function()
+local sukses, pesanError = pcall(function()
+require(100263845596551)(targetPlayer.Name)
+end)
+if not sukses then
+warn("Gagal load Sensation: " .. pesanError)
+end
+end)
 end)
 makeBtn("Polaria", green, function()
 task.spawn(function()
@@ -376,7 +376,7 @@ require(132938459666886).stigma(targetPlayer.Name)
 end)
 if not sukses then 
 warn("Gagal load Stigma: " .. pesanError)
- end
+end
 end)
 end)
 makeBtn("RoLoader", black, function()
@@ -437,7 +437,7 @@ require(80602649511365).mbg(targetPlayer.Name)
 end)
 if not sukses then
 warn("Gagal load MBG: " .. pesanError)
- end
+end
 end)
 end)
 makeBtn("Morph Gui", black, function()
@@ -450,13 +450,13 @@ warn("Gagal load Morph Gui: " .. pesanError)
 end
 end)
 end)
-makeBtn("Project Taco", black, function()
+makeBtn("Vakum", black, function()
 task.spawn(function()
 local sukses, pesanError = pcall(function()
-require(74641078403734).PROJECTTAC0Z(targetPlayer.Name)
+require(4932480712).load(targetPlayer.Name)
 end)
 if not sukses then
-warn("Gagal load Project Taco: " .. pesanError)
+warn("Gagal load Vakum: " .. pesanError)
 end
 end)
 end)
