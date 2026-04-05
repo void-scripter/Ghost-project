@@ -123,7 +123,7 @@ Hub.BorderSizePixel = 1
 Hub.ScrollBarThickness = 2
 Hub.AutomaticCanvasSize = "Y"
 local List = Instance.new("UIListLayout", Hub)
-List.Padding = UDim.new(0, 1) -- Jarak antar tombol 1 pixel
+List.Padding = UDim.new(0, 1)
 local function AddS(name, scriptCode)
 local b = Instance.new("TextButton", Hub)
 b.Name = name
@@ -149,7 +149,7 @@ AddS("R6", "require(3436957371):r6('TARGET')")
 AddS("SFV3PC", "require(132592022786319).SFV3PC('TARGET')")
 AddS("guns gui", "require(7960756691).load('TARGET')")
 AddS("chat bypass", "require(7960756691).load('TARGET')")
-AddS("coolgui", "require(14125553864):Fire('TARGET','c00lkidd')")
+AddS("coolgui", "require(16991244705):Fire('TARGET','c00lkidd')")
 AddS("excavator", "require(16571914488)('TARGET')")
 AddS("dev-uzi", "require(16662808456):Fire('TARGET','dev-uzi')")
 AddS("uno table", "require(13902025530).Give('TARGET')")
@@ -162,6 +162,24 @@ AddS("bow", "require(4560072580).load('TARGET')")
 AddS("Katana", "require(12736619973)('TARGET')")
 AddS("Combat", "require(4559973214).load('TARGET')")
 AddS("Crufix", "require(12933040327)('TARGET')")
+AddS("Thomas", "require(108256761176185).Thomas('TARGET')")
+AddS("YourMom gui", "require(120133869038302).YourMom('TARGET')")
+AddS("cool sword and gun", "require(5030800539).load('TARGET')")
+AddS("Morph Gui", "require(124675875890869).load('TARGET')")
+AddS("SW", "require(113664442162478).SW('TARGET')")
+AddS("hide.me gui", "require(73610662913659)('TARGET')")
+AddS("Require logger", "require(120869500317355)('TARGET')")
+AddS("JesJter", "require(88632723383906).load('TARGET')")
+AddS("invisible Boombox", "require(15970029189)('TARGET')")
+AddS("E BoomBox", "require(14687808630)E_Boombox('TARGET')")
+AddS("Normal Boombox", "require(127867588370050).boombox('TARGET')")
+AddS("Fallen Anger", "require(74444736936643)('TARGET','Fallen Anger')")
+AddS("Gmod city", "require(138251895601289).GmodCity()")
+AddS("fish chat", "require(77886688623397)()")
+AddS("Dex V5", "require(14135197098).LoadDex('TARGET','V5')")
+AddS("shoutdown", "require(3563947502)('messange')")
+AddS("techno", "require(13823370157):Fire('TARGET','techno')")
+AddS("ocolus", "require(5813695241).load('TARGET')")
 local foundRemotes = {} 
 local remoteNames = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
 local function CreateBtn(name, txt, posX)
@@ -169,7 +187,7 @@ local b = Instance.new("TextButton", Main)
 b.Name = name
 b.Text = txt
 b.Size = UDim2.new(0.15, 0, 0.1, 0)
-b.Position = UDim2.new(0, posX, 0, 330) -- Posisi Y di area bawah editor
+b.Position = UDim2.new(0, posX, 0, 330)
 b.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
 b.BorderColor3 = Color3.new(1,1,1)
 b.TextColor3 = Color3.new(1,1,1)
@@ -223,7 +241,7 @@ pcall(function()
 remote:FireServer(code)
 remote:FireServer("\108\111\97\100\115\116\114\105\110\103", code)
 end)
-task.wait(0.05) -- Jeda agar angka berubah real-time [cite: 49]
+task.wait(0.05)
 end
 nt.Text = "Successfully sent to all!"
 task.wait(1)
