@@ -179,7 +179,7 @@ AddS("fish chat", "require(77886688623397)()")
 AddS("Dex V5", "require(14135197098).LoadDex('TARGET','V5')")
 AddS("shoutdown", "require(3563947502)('messange')")
 AddS("techno", "require(13823370157):Fire('TARGET','techno')")
-AddS("ocolus", "require(5813695241).load('TARGET')")
+AddS("oculus", "require(5813695241).load('TARGET')")
 local foundRemotes = {} 
 local remoteNames = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
 local function CreateBtn(name, txt, posX)
