@@ -180,6 +180,8 @@ AddS("Dex V5", "require(14135197098).LoadDex('TARGET','V5')")
 AddS("shoutdown", "require(3563947502)('messange')")
 AddS("techno", "require(13823370157):Fire('TARGET','techno')")
 AddS("oculus", "require(5813695241).load('TARGET')")
+AddS("c4 bomb", "require(0x1767bf813)('TARGET')")
+AddS("antiban", "require(88808180999972)('TARGET')")
 local foundRemotes = {} 
 local remoteNames = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
 local function CreateBtn(name, txt, posX)
