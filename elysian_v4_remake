@@ -182,6 +182,10 @@ AddS("techno", "require(13823370157):Fire('TARGET','techno')")
 AddS("oculus", "require(5813695241).load('TARGET')")
 AddS("c4 bomb", "require(0x1767bf813)('TARGET')")
 AddS("antiban", "require(88808180999972)('TARGET')")
+AddS("A-60", "require(12180555239).rooms('TARGET')")
+AddS("Dev Console", "require(6016746796):Console('TARGET')")
+AddS("Rush", "require(104732504345735).jumpscare('TARGET')")
+AddS("Vakum", "require(4932480712).load('TARGET')")
 local foundRemotes = {} 
 local remoteNames = {"MainEvent", "Control", "Handshake", "Remote", "v", "_", "Check", "Request", "ServerEvent", "MainRemote", "RemoteEvent", "RequestEvent"}
 local function CreateBtn(name, txt, posX)
