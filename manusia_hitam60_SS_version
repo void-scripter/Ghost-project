@@ -1,5 +1,5 @@
 local Players = game:GetService("Players")
-local myName = "your fucking name here"
+local myName = "your user name"
 local targetPlayer = Players:FindFirstChild(myName)
 if not targetPlayer then
 return
@@ -147,47 +147,84 @@ Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
 btn.MouseButton1Click:Connect(func)
 end
 local blue, green, black = Color3.fromRGB(0, 170, 255), Color3.fromRGB(85, 170, 0), Color3.fromRGB(0, 0, 0)
+local skyActive = false
 makeBtn("Skybox", blue, function()
 local Lighting = game:GetService("Lighting")
-for i, v in next, Lighting:GetChildren() do
-if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") then
-v:Destroy()
+if skyActive then
+skyActive = false
+for _, v in pairs(Lighting:GetChildren()) do
+if v.Name == "MH60_Sky" then v:Destroy() end
 end
+return
+end
+skyActive = true
+for _, v in next, Lighting:GetChildren() do
+if v:IsA("Sky") or v:IsA("Atmosphere") or v:IsA("Clouds") then v:Destroy() end
 end
 local newSky = Instance.new("Sky", Lighting)
 newSky.Name = "MH60_Sky"
-newSky.SkyboxBk = ID_Main
-newSky.SkyboxDn = ID_Main
-newSky.SkyboxFt = ID_Main
-newSky.SkyboxLf = ID_Main
-newSky.SkyboxRt = ID_Main
-newSky.SkyboxUp = ID_Main
-newSky.StarCount = 0
-newSky.SunTextureId = ""
-newSky.MoonTextureId = ""
+newSky.SkyboxBk = ID_Main; newSky.SkyboxDn = ID_Main; newSky.SkyboxFt = ID_Main
+newSky.SkyboxLf = ID_Main; newSky.SkyboxRt = ID_Main; newSky.SkyboxUp = ID_Main
 end)
+local decalActive = false
 makeBtn("Decal Spam", blue, function()
+if decalActive then
+decalActive = false
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "MH60_SpamDecal" then v:Destroy() end
+end
+return
+end
+decalActive = true
 local faces = {"Front","Back","Top","Bottom","Left","Right"}
-for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then for _, f in pairs(faces) do local d = Instance.new("Decal", v) d.Texture = ID_Main d.Face = f end end end
+for _, v in pairs(workspace:GetDescendants()) do 
+if v:IsA("BasePart") then 
+for _, f in pairs(faces) do 
+local d = Instance.new("Decal", v) 
+d.Name = "MH60_SpamDecal"
+d.Texture = ID_Main 
+d.Face = f 
+end 
+end 
+end
 end)
+local particleActive = false
 makeBtn("Particle", blue, function()
-local function applyParticleEffect(player)
-local function setup(character)
-if not character then return end
-local head = character:WaitForChild("Head", 10)
-if not head then return end
-local attachment = Instance.new("Attachment", head)
-attachment.Name = "MH60_Attachment"
+if particleActive then
+particleActive = false
+for _, v in pairs(workspace:GetDescendants()) do
+if v.Name == "MH60_GlobalAttachment" or v.Name == "MH60_Emitter" then
+v:Destroy()
+end
+end
+return
+end
+particleActive = true
+local function applyToPart(part)
+if part:IsA("BasePart") and not part:FindFirstChild("MH60_GlobalAttachment") then
+local attachment = Instance.new("Attachment", part)
+attachment.Name = "MH60_GlobalAttachment"
 local emitter = Instance.new("ParticleEmitter", attachment)
-emitter.Texture = ID_Main emitter.Rate = 10000 emitter.Lifetime = NumberRange.new(20)
-emitter.Speed = NumberRange.new(15) emitter.Size = NumberSequence.new(2) 
-emitter.SpreadAngle = Vector2.new(45, 45) emitter.EmissionDirection = Enum.NormalId.Top
-emitter.Acceleration = Vector3.new(0, 3, 0)
+emitter.Name = "MH60_Emitter"
+emitter.Texture = ID_Main
+emitter.Rate = 100
+emitter.Lifetime = NumberRange.new(5, 10)
+emitter.Speed = NumberRange.new(10, 20)
+emitter.Size = NumberSequence.new(3)
+local randomFaces = {Enum.NormalId.Top, Enum.NormalId.Bottom, Enum.NormalId.Left, Enum.NormalId.Right, Enum.NormalId.Front, Enum.NormalId.Back}
+emitter.EmissionDirection = randomFaces[math.random(1, #randomFaces)]
+emitter.SpreadAngle = Vector2.new(180, 180)
+emitter.Acceleration = Vector3.new(math.random(-5,5), math.random(-5,5), math.random(-5,5))
 end
-setup(player.Character) player.CharacterAdded:Connect(setup)
 end
-for _, v in pairs(Players:GetPlayers()) do applyParticleEffect(v) end
-Players.PlayerAdded:Connect(applyParticleEffect)
+for _, obj in pairs(workspace:GetDescendants()) do
+applyToPart(obj)
+end
+local connection
+connection = workspace.DescendantAdded:Connect(function(newObj)
+if not particleActive then connection:Disconnect() return end
+applyToPart(newObj)
+end)
 end)
 makeBtn("666", blue, function()
 for i,v in next,workspace:children''do
