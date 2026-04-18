@@ -1,5 +1,5 @@
 local Players = game:GetService("Players")
-local myName = "your user name"
+local myName = "Your user name"
 local targetPlayer = Players:FindFirstChild(myName)
 if not targetPlayer then
 return
@@ -292,13 +292,13 @@ end)
 makeBtn("Unanchor All", blue, function()
 for _, v in pairs(workspace:GetDescendants()) do if v:IsA("BasePart") then v.Anchored = false end end
 end)
-makeBtn("Mr.Bean Admin", blue, function() 
+makeBtn("Infinite Yield SS", blue, function() 
 task.spawn(function()
 local sukses, pesanError = pcall(function()
-require(16426905729)(targetPlayer.Name)
+require(7634392335)(targetPlayer.Name)
 end)
 if not sukses then
-warn("Gagal load Mr.bean admin: " .. pesanError)
+warn("Gagal load Infinite Yield SS: " .. pesanError)
 end
 end)
 end)
@@ -346,13 +346,13 @@ warn("Gagal load Sensation: " .. pesanError)
 end
 end)
 end)
-makeBtn("Polaria", green, function()
+makeBtn("Stratosphere", green, function()
 task.spawn(function()
 local sukses, pesanError = pcall(function()
-require(110951620907921):Pload(targetPlayer.Name)
+require(6535776034).load(targetPlayer.Name)
 end)
 if not sukses then
-warn("Gagal load Polaria: " .. pesanError)
+warn("Gagal load Stratosphere: " .. pesanError)
 end
 end)
 end)
@@ -507,4 +507,4 @@ warn("Gagal load Chat Bypass: " .. pesanError)
 end
 end)
 end)
-end
+e
