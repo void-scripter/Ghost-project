@@ -379,7 +379,7 @@ end)
 makeBtn("Happy Hub", green, function()
 task.spawn(function()
 local sukses, pesanError = pcall(function()
-require(109229360070706):Hload(targetPlayer.Name)
+require(88812096580830):Hload(targetPlayer.Name)
 end)
 if not sukses then
 warn("Gagal load Happy hub: " .. pesanError)
