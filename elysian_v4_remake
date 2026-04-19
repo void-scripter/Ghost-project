@@ -140,7 +140,7 @@ local finalCode = scriptCode:gsub("TARGET", lp.Name)
 Box.Text = finalCode
 end)
 end
-AddS("happy hub", "require(109229360070706):Hload('TARGET')")
+AddS("happy hub", "require(88812096580830):Hload('TARGET')")
 AddS("Respawn", "require(3229910984):respawn('TARGET')")
 AddS("polaria", "require(110951620907921):Pload('TARGET')")
 AddS("sensation hub", "require(100263845596551)('TARGET')")
