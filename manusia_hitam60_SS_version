@@ -24,7 +24,7 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.DisplayOrder = 99999
 ScreenGui.Parent = pGui
 local legends = {
-[myName] = "Thanks for using my script, and i hope your day is good"
+[myName] = "and i hope your day is good"
 }
 local myStatus = legends[targetPlayer.Name] or "USER"
 if myStatus ~= "USER" then
@@ -38,7 +38,7 @@ local t = Instance.new("TextLabel", n)
 t.Size = UDim2.new(1, -20, 1, 0)
 t.Position = UDim2.new(0, 10, 0, 0)
 t.BackgroundTransparency = 1
-t.Text = "WELCOME THE GREATEST FRIENDS\n[" .. myStatus .. " " .. targetPlayer.Name .. "]"
+t.Text = "thanks for using my script\n[" .. myStatus .. "]"
 t.TextColor3 = Color3.new(1,1,1)
 t.Font = "Code"
 t.TextSize = 14
