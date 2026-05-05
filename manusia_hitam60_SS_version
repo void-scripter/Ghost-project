@@ -1,5 +1,5 @@
 local Players = game:GetService("Players")
-local myName = "Your user name"
+local myName = "your username"
 local targetPlayer = Players:FindFirstChild(myName)
 if not targetPlayer then
 return
@@ -24,13 +24,7 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.DisplayOrder = 99999
 ScreenGui.Parent = pGui
 local legends = {
-["manusia_hitam60"] = "not a friends, but OWNER",
-["kevinphone7"] = "THIS SCRIPT DESIGNED FOR YOU",
-["V990one_c00lkizz"] = "YOOOOYOU TRY IT MY FRIEND",
-["Realoscarina"] = "THANK YOU FOR THE CHAT SCRIPT",
-["lookid13"] = "LETS TO TRY IT",
-["glitch_du"] = "NOW LETS TRY MY SCRIPT",
-["R0van_exploiter"] = "YO ROVAN, TEST MY SCRIPT"
+[myName] = "Thanks for using my script, and i hope your day is good"
 }
 local myStatus = legends[targetPlayer.Name] or "USER"
 if myStatus ~= "USER" then
@@ -457,13 +451,13 @@ warn("Gagal load Dev console: " .. pesanError)
 end
 end)
 end)
-makeBtn("Chat", black, function()
+makeBtn("NFChat", black, function()
 task.spawn(function()
 local sukses, pesanError = pcall(function()
-require(77886688623397)()
+require(81663126110498)()
 end)
 if not sukses then
-warn("Gagal load Chat: " .. pesanError)
+warn("Gagal load NFChat: " .. pesanError)
 end
 end)
 end)
